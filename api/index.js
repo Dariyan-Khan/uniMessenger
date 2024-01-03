@@ -11,7 +11,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 require("dotenv").config({ path: "./.env" });
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 // Calling use(cors()) will enable the express server to respond to preflight requests. 
 // A preflight request is basically an OPTION request sent to the server before the actual request is sent, 
