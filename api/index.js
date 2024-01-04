@@ -8,7 +8,7 @@ const LocalStrategy = require("passport-local").Strategy; // Used for handling u
 
 
 
-//require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env" });
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -59,7 +59,8 @@ const jwt = require("jsonwebtoken");
 
 mongoose.connect(
     //"mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/",
-    'mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/?retryWrites=true&w=majority',
+    // 'mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/?retryWrites=true&w=majority',
+    process.env.MONGODB_URL,
     {
         useNewURLParser: true,
         useUnifiedTopology: true
