@@ -56,7 +56,7 @@ import {
     const fetchMessages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/messages/${userId}/${recepientId}`
+          `http://localhost:3000/messages/${userId}/${recepientId}`
         );
         const data = await response.json();
   
@@ -78,7 +78,7 @@ import {
       const fetchRecepientData = async () => {
         try {
           const response = await fetch(
-            `http://localhost:8000/user/${recepientId}`
+            `http://localhost:3000/user/${recepientId}`
           );
   
           const data = await response.json();
@@ -109,7 +109,7 @@ import {
           formData.append("messageText", message);
         }
   
-        const response = await fetch("http://localhost:8000/messages", {
+        const response = await fetch("http://localhost:3000/messages", {
           method: "POST",
           body: formData,
         });
@@ -182,7 +182,7 @@ import {
   
     const deleteMessages = async (messageIds) => {
       try {
-        const response = await fetch("http://localhost:8000/deleteMessages", {
+        const response = await fetch("http://localhost:3000/deleteMessages", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -291,7 +291,8 @@ import {
   
             if (item.messageType === "image") {
               const baseUrl =
-                "/Users/sujananand/Build/messenger-project/api/files/";
+                "/Users/sujananand/Build/messenger-project/api/files/"; // THIS IS AT AROUND ABOUT 3:54:00 OF THE VIDEO. THIS WILL ONLY WORK LOCALLY
+                // Tthis assumes that te images are available locally. In reality this will need to be changed
               const imageUrl = item.imageUrl;
               const filename = imageUrl.split("/").pop();
               const source = { uri: baseUrl + filename };

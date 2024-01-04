@@ -4,14 +4,14 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy; // Used for handling username-password authentication in an app
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+//const { MongoClient, ServerApiVersion } = require('mongodb');
 
 
 
-require("dotenv").config({ path: "./.env" });
+//require("dotenv").config({ path: ".env" });
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 8000 // process.env.PORT || 3000;
 
 // Calling use(cors()) will enable the express server to respond to preflight requests. 
 // A preflight request is basically an OPTION request sent to the server before the actual request is sent, 
@@ -33,44 +33,45 @@ const jwt = require("jsonwebtoken");
 
 
 
-const client = new MongoClient(process.env.MONGODB_URL, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+// const client = new MongoClient(process.env.MONGODB_URL, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } catch(err){
-    console.log("Ann error occurred")
-    console.log(err)
-  }
-} 
+// async function run() {
+//   try {
+//     // Connect the client to the server	(optional starting in v4.7)
+//     await client.connect();
+//     // Send a ping to confirm a successful connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   } catch(err){
+//     console.log("An error occurred")
+//     console.log(err)
+//   }
+// } 
 
-run()
+// run()
 
 
-// mongoose.connect(
-//     "mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/",
-//     {
-//         useNewURLParser: true,
-//         useUnifiedTopology: true
-//     }
-// ).then(() => {
-//     console.log("Connnected to MongoDB");
-// }).catch((err) => {
-//     console.log("Error connecting to MongoDB,", err)
-// })
+mongoose.connect(
+    "mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/",
+    //'mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/?retryWrites=true&w=majority',
+    {
+        useNewURLParser: true,
+        useUnifiedTopology: true
+    }
+).then(() => {
+    console.log("Connnected to MongoDB");
+}).catch((err) => {
+    console.log("Error connecting to MongoDB,", err)
+})
 
 app.listen(port, () => {
-    console.log("Server running on port 8000");
+    console.log("Server running on port 3000");
 });
 
 const User = require("./models/user");

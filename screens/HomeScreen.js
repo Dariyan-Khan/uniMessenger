@@ -10,7 +10,9 @@ import axios from "axios";
 import User from "../components/User";
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const { userId, setUserId } = useContext(UserType);
+  console.log(UserType)
+  console.log("truyqwtet")
+  const { userId  , setUserId } = useContext(UserType);
   const [users, setUsers] = useState([]);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -34,13 +36,14 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      console.log("hdfgkjasfhga")
       const token = await AsyncStorage.getItem("authToken");
       const decodedToken = jwt_decode(token);
       const userId = decodedToken.userId;
       setUserId(userId);
 
       axios
-        .get(`http://localhost:8000/users/${userId}`)
+        .get(`http://localhost:3000/users/${userId}`)
         .then((response) => {
           setUsers(response.data);
         })
