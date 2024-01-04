@@ -11,7 +11,7 @@ const LocalStrategy = require("passport-local").Strategy; // Used for handling u
 //require("dotenv").config({ path: ".env" });
 
 const app = express();
-const port = 8000 // process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // Calling use(cors()) will enable the express server to respond to preflight requests. 
 // A preflight request is basically an OPTION request sent to the server before the actual request is sent, 
@@ -58,8 +58,8 @@ const jwt = require("jsonwebtoken");
 
 
 mongoose.connect(
-    "mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/",
-    //'mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/?retryWrites=true&w=majority',
+    //"mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/",
+    'mongodb+srv://dariyank:dariyank@cluster0.vlblqo9.mongodb.net/?retryWrites=true&w=majority',
     {
         useNewURLParser: true,
         useUnifiedTopology: true

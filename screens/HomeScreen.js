@@ -10,8 +10,6 @@ import axios from "axios";
 import User from "../components/User";
 const HomeScreen = () => {
   const navigation = useNavigation();
-  console.log(UserType)
-  console.log("truyqwtet")
   const { userId  , setUserId } = useContext(UserType);
   const [users, setUsers] = useState([]);
   useLayoutEffect(() => {
