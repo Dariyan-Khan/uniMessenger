@@ -65,11 +65,17 @@ mongoose.connect(
         useNewURLParser: true,
         useUnifiedTopology: true
     }
-).then(() => {
-    console.log("Connnected to MongoDB");
-}).catch((err) => {
-    console.log("Error connecting to MongoDB,", err)
-})
+)
+.then((data) => {
+  console.log(`mongodb is connected with server: ${data.connection.host}`);
+});
+// .then(() => {
+//     console.log("Connnected to MongoDB");
+// }).catch((err) => {
+//     console.log("Error connecting to MongoDB,", err)
+// })
+
+
 
 app.listen(port, () => {
     console.log("Server running on port 3000");
