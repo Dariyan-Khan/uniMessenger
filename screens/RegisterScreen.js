@@ -3,6 +3,7 @@ import React, {useState}  from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth"
 
 
 

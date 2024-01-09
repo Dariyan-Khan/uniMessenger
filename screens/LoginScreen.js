@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth"
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
@@ -26,10 +27,9 @@ const LoginScreen = () => {
         } catch (error){
             console.log(error);
             alert( 'Sign in failed: ' + error.message);
-            } finally {
+        } finally {
             setLoading(false);
             }
-        }
 
 
     
