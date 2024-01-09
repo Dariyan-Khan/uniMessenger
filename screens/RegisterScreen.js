@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Pressable, Ale
 import React, {useState}  from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
+import { FIREBASE_AUTH } from "../FirebaseConfig";
 
 
 
@@ -11,8 +12,10 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState("");
     const [image, setImage] = useState("");
     const navigation = useNavigation();
+    const auth = FIREBASE_AUTH;
+    const [loading, setLoading] = useState(false)
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         const user = {
             name: name,
             email: email,
@@ -21,26 +24,40 @@ const RegisterScreen = () => {
         };
 
          // send a POST  request to the backend API to register the user
-        axios
-        .post("https://messenger-project-mern-mtgnrpbza-dariyans-projects.vercel.app/register", user)
-        .then((response) => {
-        console.log(response);
-        Alert.alert(
-            "Registration successful",
-            "You have been registered Successfully"
-        );
-        setName("");
-        setEmail("");
-        setPassword("");
-        setImage("");
-        })
-        .catch((error) => {
-        Alert.alert(
-            "Registration Error",
-            "An error occurred while registering"
-        );
-        console.log("registration failed", error);
-        });
+        // axios
+        // .post("https://messenger-project-mern-mtgnrpbza-dariyans-projects.vercel.app/register", user)
+        // .then((response) => {
+        // console.log(response);
+        // Alert.alert(
+        //     "Registration successful",
+        //     "You have been registered Successfully"
+        // );
+
+      
+        setLoading (true);
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(response);
+            alert('Check your emails!');
+        } catch (error) {
+        console.log(error);
+        alert('Sign in failed: ' + error.message);
+        } finally {
+        setLoading (false);
+        }
+
+        // setName("");
+        // setEmail("");
+        // setPassword("");
+        // setImage("");
+        // })
+        // .catch((error) => {
+        // Alert.alert(
+        //     "Registration Error",
+        //     "An error occurred while registering"
+        // );
+        // console.log("registration failed", error);
+        // });
     }
   return (
     <View

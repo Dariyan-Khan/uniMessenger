@@ -3,32 +3,51 @@ import React, {useState} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FIREBASE_AUTH } from "../FirebaseConfig";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const auth = FIREBASE_AUTH;
+    const [loading, setLoading] = useState(false)
+
     const navigation = useNavigation();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         const user = {
           email: email,
           password: password,
         };  
+
+        setLoading(true)
+        try {
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            console.log(response);
+        } catch (error){
+            console.log(error);
+            alert( 'Sign in failed: ' + error.message);
+            } finally {
+            setLoading(false);
+            }
+        }
+
+
     
-        axios
-          .post("http://localhost:3000/login", user)
-          .then((response) => {
-            // console.log(response);
-            const token = response.data.token;
-            AsyncStorage.setItem("authToken", token);
+        // axios
+        //   .post("http://localhost:3000/login", user)
+        //   .then((response) => {
+        //     // console.log(response);
+        //     const token = response.data.token;
+        //     AsyncStorage.setItem("authToken", token);
     
-            navigation.replace("Home");
-          })
-          .catch((error) => {
-            Alert.alert("Login Error", "Invalid email or password");
-            console.log("Login Error", error);
-          });
+        //     navigation.replace("Home");
+        //   })
+        //   .catch((error) => {
+        //     Alert.alert("Login Error", "Invalid email or password");
+        //     console.log("Login Error", error);
+        //   });
       };
+      
      
     return (
         <View style={{flex:1, backgroundColor:"white", padding:10, alignItems:"center"}}>
