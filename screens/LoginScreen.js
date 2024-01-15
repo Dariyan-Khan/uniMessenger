@@ -121,7 +121,7 @@ const LoginScreen = () => {
                 onPress={() => navigation.navigate("Register")}
                 style={{ marginTop: 15 }}>
                     <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-                    Dont't have an account? Sign Up
+                    Don't have an account? Sign Up
                     </Text>
                 </Pressable>
 

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth"
+import RNPickerSelect from 'react-native-picker-select';
 
 
 
@@ -12,6 +13,7 @@ const RegisterScreen = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState("");
+    const [uni, setUni] = useState("");
     const navigation = useNavigation();
     const auth = FIREBASE_AUTH;
     const [loading, setLoading] = useState(false)
@@ -60,6 +62,12 @@ const RegisterScreen = () => {
         // console.log("registration failed", error);
         // });
     }
+
+    const uniPlaceholder = {
+        label: 'Select your university',
+        value: null,
+        };
+        
   return (
     <View
       style={{
@@ -91,6 +99,21 @@ const RegisterScreen = () => {
                         }}
                         placeholderTextColor={"black"}
                         placeholder="Enter your name"/>
+                </View>
+
+                <View>
+
+                    <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
+                    University </Text>
+
+                    
+
+                    <RNPickerSelect
+                        placeholder={uniPlaceholder}
+                        items={options}
+                        onValueChange={(value) => setSelectedValue(value)}
+                        value={selectedValue}
+                    />
                 </View>
 
                 <View>
