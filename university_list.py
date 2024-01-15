@@ -145,11 +145,11 @@ if __name__ == "__main__":
     uni_split.pop()
     uni_json_list = []
     for uni in uni_split:
-        label = uni
-        value = label.replace(" ", "_").lower()
+        labels = uni
+        values = label.replace(" ", "_").lower()
         uni_json_list.append(
-            {"label": label,
-             "value": value }
+            {label: label,
+             value: value }
         )
 
     # print(uni_json_list)

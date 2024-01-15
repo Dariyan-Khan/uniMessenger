@@ -13,11 +13,13 @@ const RegisterScreen = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState("");
-    const [uni, setUni] = useState("");
+    const [selectedUni, setUni] = useState("");
     const navigation = useNavigation();
     const auth = FIREBASE_AUTH;
     const [loading, setLoading] = useState(false)
 
+    const uni_list = '../university_list.json'
+    
     const handleRegister = async () => {
         const user = {
             name: name,
@@ -101,7 +103,7 @@ const RegisterScreen = () => {
                         placeholder="Enter your name"/>
                 </View>
 
-                <View>
+                <View style={{marginBottom:10}}>
 
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     University </Text>
@@ -110,10 +112,11 @@ const RegisterScreen = () => {
 
                     <RNPickerSelect
                         placeholder={uniPlaceholder}
-                        items={options}
-                        onValueChange={(value) => setSelectedValue(value)}
-                        value={selectedValue}
+                        items={require(uni_list)}
+                        onValueChange={(value) => setUni(value)}
+                        value={selectedUni}
                     />
+
                 </View>
 
                 <View>
