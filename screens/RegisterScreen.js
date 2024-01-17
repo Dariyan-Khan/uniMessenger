@@ -18,8 +18,10 @@ const RegisterScreen = () => {
     const auth = FIREBASE_AUTH;
     const [loading, setLoading] = useState(false)
 
-    const uni_list = '../university_list.json'
-    
+    const uni_list_url = '../university_list.json'
+
+    const email_dict_url = '../university_emails.json'
+
     const handleRegister = async () => {
         const user = {
             name: name,
@@ -27,6 +29,30 @@ const RegisterScreen = () => {
             password: password,
             image: image
         };
+
+        const uni_emails = require(email_dict_url)
+
+        const corr_uni_ending = uni_emails[selectedUni]
+
+        const curr_email_ending = email.split("@")[1]
+
+
+
+
+        if (corr_uni_ending !== curr_email_ending) {
+            Alert.alert(
+                "Email Error",
+                 `Expected email ending in ${corr_uni_ending} for ${selectedUni}`
+                );
+            return; 
+        }
+
+        // Alert.alert(
+        //     "Registration Error",
+        //     "An error occurred while registering"
+        // );
+
+        
 
          // send a POST  request to the backend API to register the user
         // axios
@@ -112,7 +138,7 @@ const RegisterScreen = () => {
 
                     <RNPickerSelect
                         placeholder={uniPlaceholder}
-                        items={require(uni_list)}
+                        items={require(uni_list_url)}
                         onValueChange={(value) => setUni(value)}
                         value={selectedUni}
                     />
