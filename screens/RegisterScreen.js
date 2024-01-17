@@ -3,7 +3,7 @@ import React, {useState}  from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import { FIREBASE_AUTH } from "../FirebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth"
 import RNPickerSelect from 'react-native-picker-select';
 
 
@@ -63,13 +63,17 @@ const RegisterScreen = () => {
         //     "Registration successful",
         //     "You have been registered Successfully"
         // );
-
       
         setLoading (true);
         try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
-            alert('Check your emails!');
+            await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+                // Send verification email
+            sendEmailVerification(userCredential.user);
+            alert("Successfully registered!",
+                "An email has been seent for verification")
+            });
+            
+
         } catch (error) {
         console.log(error);
         alert('Sign in failed: ' + error.message);
