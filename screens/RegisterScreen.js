@@ -46,24 +46,7 @@ const RegisterScreen = () => {
                 );
             return; 
         }
-
-        // Alert.alert(
-        //     "Registration Error",
-        //     "An error occurred while registering"
-        // );
-
-        
-
-         // send a POST  request to the backend API to register the user
-        // axios
-        // .post("https://messenger-project-mern-mtgnrpbza-dariyans-projects.vercel.app/register", user)
-        // .then((response) => {
-        // console.log(response);
-        // Alert.alert(
-        //     "Registration successful",
-        //     "You have been registered Successfully"
-        // );
-      
+              
         setLoading (true);
         try {
             await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
