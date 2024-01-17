@@ -46,7 +46,7 @@ const RegisterScreen = () => {
                 );
             return; 
         }
-              
+
         setLoading (true);
         try {
             await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -63,19 +63,7 @@ const RegisterScreen = () => {
         } finally {
         setLoading (false);
         }
-
-        // setName("");
-        // setEmail("");
-        // setPassword("");
-        // setImage("");
-        // })
-        // .catch((error) => {
-        // Alert.alert(
-        //     "Registration Error",
-        //     "An error occurred while registering"
-        // );
-        // console.log("registration failed", error);
-        // });
+        
     }
 
     const uniPlaceholder = {
