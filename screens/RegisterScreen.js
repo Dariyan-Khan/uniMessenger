@@ -45,25 +45,28 @@ const RegisterScreen = () => {
                  `Expected email ending in ${corr_uni_ending} for ${selectedUni}`
                 );
             return; 
-        }
+        };
 
+        alert(`Successfully registered! An email has been seent for verification`)
         setLoading (true);
         try {
             await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
                 // Send verification email
             sendEmailVerification(userCredential.user);
-            alert("Successfully registered!",
-                "An email has been seent for verification")
+            alert(`Successfully registered! An email has been seent for verification`)
             });
-            
+
+            // navigation.navigate("Login")
 
         } catch (error) {
+
         console.log(error);
         alert('Sign in failed: ' + error.message);
+
         } finally {
         setLoading (false);
         }
-        
+
     }
 
     const uniPlaceholder = {
