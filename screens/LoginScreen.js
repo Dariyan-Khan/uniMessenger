@@ -29,11 +29,9 @@ const LoginScreen = () => {
                     sendEmailVerification(user);
                     Alert.alert("Please verify your email");
                     signOut(auth);
-                    console.log("No")
                     return;
                 }
                 
-                console.log("Yay")
 
             })
             console.log(response);
