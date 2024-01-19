@@ -2,9 +2,10 @@ import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Pressable, Ale
 import React, {useState}  from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
-import { FIREBASE_AUTH } from "../FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth"
 import RNPickerSelect from 'react-native-picker-select';
+import { doc, setDoc } from "firebase/firestore";
 
 
 
@@ -30,14 +31,14 @@ const RegisterScreen = () => {
             image: image
         };
 
+        
+
+
         const uni_emails = require(email_dict_url)
 
         const corr_uni_ending = uni_emails[selectedUni]
 
         const curr_email_ending = email.split("@")[1]
-
-
-
 
         if (corr_uni_ending !== curr_email_ending) {
             Alert.alert(
@@ -50,12 +51,23 @@ const RegisterScreen = () => {
         setLoading (true);
         try {
             await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-                // Send verification email
-            sendEmailVerification(userCredential.user);
-            alert(`Successfully registered! An email has been seent for verification`)
+                const user_data = {
+                    _id: userCredential?.user.uid,
+                    userName: name,
+                    uni: selectedUni,
+                    providerData: userCredential.user.providerData[0],
+                  };
+    
+                setDoc(doc(FIRESTORE_DB, "users", userCredential?.user.uid), user_data).then(
+                    () => {
+                        sendEmailVerification(userCredential.user);
+                        alert(`Successfully registered! An email has been seent for verification`)
+                        navigation.navigate("Login")
+                    }
+                )
+                
             });
 
-            navigation.navigate("Login")
 
         } catch (error) {
 
