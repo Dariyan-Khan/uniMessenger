@@ -3,8 +3,8 @@ import React, {useState} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FIREBASE_AUTH } from "../FirebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
+import { signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth"
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
@@ -22,7 +22,20 @@ const LoginScreen = () => {
 
         setLoading(true)
         try {
-            const response = await signInWithEmailAndPassword(auth, email, password);
+            const response = await signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
+                const user = userCredential.user;
+
+                if(!user.emailVerified){
+                    sendEmailVerification(user);
+                    Alert.alert("Please verify your email");
+                    signOut(auth);
+                    console.log("No")
+                    return;
+                }
+                
+                console.log("Yay")
+
+            })
             console.log(response);
         } catch (error){
             console.log(error);
@@ -78,12 +91,12 @@ const LoginScreen = () => {
 
                 <View>
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
-                    Email </Text>
+                    Password </Text>
 
                     <TextInput
                     value={password}
                     onChangeText={(text) => setPassword(text)}
-                    secureTextEntry={true}
+                    secureTextEntry={false} // set to true
                     style={{
                         fontSize: email ? 18 : 18,
                         borderBottomColor: "gray",
@@ -92,7 +105,7 @@ const LoginScreen = () => {
                         width: 300,
                     }}
                     placeholderTextColor={"black"}
-                    placeholder="enter Your Email"/>
+                    placeholder="enter Your Password"/>
                 </View>
 
                 <Pressable

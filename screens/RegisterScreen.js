@@ -47,7 +47,6 @@ const RegisterScreen = () => {
             return; 
         };
 
-        alert(`Successfully registered! An email has been seent for verification`)
         setLoading (true);
         try {
             await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -56,7 +55,7 @@ const RegisterScreen = () => {
             alert(`Successfully registered! An email has been seent for verification`)
             });
 
-            // navigation.navigate("Login")
+            navigation.navigate("Login")
 
         } catch (error) {
 
@@ -148,7 +147,7 @@ const RegisterScreen = () => {
                     <TextInput
                         value={password}
                         onChangeText={(text) => setPassword(text)}
-                        secureTextEntry={true}
+                        secureTextEntry={false} // change back to true
                         style={{
                             fontSize: email ? 18 : 18,
                             borderBottomColor: "gray",
@@ -157,7 +156,7 @@ const RegisterScreen = () => {
                             width: 300,
                         }}
                         placeholderTextColor={"black"}
-                        placeholder="Passowrd"/>
+                        placeholder="Password"/>
                 </View>
 
                 <View>
