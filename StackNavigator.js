@@ -8,9 +8,30 @@ import HomeScreen from "./screens/HomeScreen";
 import FriendsScreen from "./screens/FriendsScreen";
 import ChatsScreen from "./screens/ChatsScreen";
 import ChatMessagesScreen from "./screens/ChatMessagesScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import PreferenceScreen from "./screens/PreferenceScreen";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
+  const Tab = createMaterialTopTabNavigator();
+
+  const SwipeNavigator = () =>  {
+    return (
+      <Tab.Navigator
+        initialRouteName="Screen1"
+        tabBarOptions={{ style: { display: 'none' } }} // Hides the tab bar
+        swipeEnabled={true}
+      >
+        <Tab.Screen name="Welcome" component={WelcomeScreen} />
+        <Tab.Screen name="Preferences" component={PreferenceScreen} />
+
+
+      </Tab.Navigator>
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -31,6 +52,9 @@ const StackNavigator = () => {
         <Stack.Screen name="Chats" component={ChatsScreen} />
 
         <Stack.Screen name="Messages" component={ChatMessagesScreen} />
+
+        <Stack.Screen name="WelcomeNavigator" component={SwipeNavigator} options={{ headerShown: false }}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

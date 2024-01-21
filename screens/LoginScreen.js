@@ -20,7 +20,6 @@ const LoginScreen = () => {
     const handleLogin = async () => {
 
         const checkIfFirstLogin = (docID) => {
-            console.log("user ID", docID);
             const docRef = doc(FIRESTORE_DB, "users", docID);
             return getDoc(docRef).then((docSnap) => {
                 return docSnap.data().firstLogin;
@@ -40,7 +39,11 @@ const LoginScreen = () => {
                 }
                 //console.log(user.uid)
                 checkIfFirstLogin(user.uid).then(firstLogin => {
-                    console.log(firstLogin)
+                    if (firstLogin) {
+                        navigation.replace("WelcomeNavigator");
+                    } else {
+                        navigation.replace("Home")
+                    }
                 })
 
             })
@@ -92,6 +95,7 @@ const LoginScreen = () => {
                     }}
                     placeholderTextColor={"black"}
                     placeholder="enter Your Email"/>
+                    
                 </View>
 
                 <View>
