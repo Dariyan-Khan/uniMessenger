@@ -1,5 +1,5 @@
 import { View, Text, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -66,6 +66,11 @@ const LoginScreen = () => {
         //     console.log("Login Error", error);
         //   });
       };
+
+    useEffect(() => {
+        navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
+    }, []);
+
       
      
     return (

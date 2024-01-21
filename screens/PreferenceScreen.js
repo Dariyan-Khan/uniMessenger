@@ -7,6 +7,7 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth"
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import RNPickerSelect from 'react-native-picker-select';
+import InterestBox from '../components/InterestsEnter';
 
 const PreferenceScreen = ({uni, userName}) => {
   const [email, setEmail] = useState("");
@@ -72,6 +73,14 @@ const PreferenceScreen = ({uni, userName}) => {
                         value={year}
                     />}
                 </View>
+
+                <View>
+                    <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
+                    Enter your interests </Text>
+                    <InterestBox/>
+                </View>
+
+                InterestBox
 
                 <Pressable
                     onPress= {() => {}}//{handleLogin}
