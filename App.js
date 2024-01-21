@@ -2,13 +2,17 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import StackNavigator from "./StackNavigator";
 import { UserContext } from "./UserContext";
+import { AuthContextProvider } from "./context/AuthContext"
 
 export default function App() {
   return (
     <>
-      <UserContext>
+      {/* <UserContext> */}
+      <AuthContextProvider>
         <StackNavigator />
-      </UserContext>
+      </AuthContextProvider>
+        
+      {/* </UserContext> */}
     </>
   );
 }

@@ -17,6 +17,8 @@ const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createMaterialTopTabNavigator();
 
+  
+
   const SwipeNavigator = () =>  {
     return (
       <Tab.Navigator
@@ -26,8 +28,6 @@ const StackNavigator = () => {
       >
         <Tab.Screen name="Welcome" component={WelcomeScreen} />
         <Tab.Screen name="Preferences" component={PreferenceScreen} />
-
-
       </Tab.Navigator>
     );
   }
