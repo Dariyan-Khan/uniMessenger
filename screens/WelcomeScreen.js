@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
 
-const WelcomeScreen = () => {
+
+const WelcomeScreen = ({uni, userName}) => {
+    const { currentUser } = useContext(AuthContext)
+
+    //console.log(currentUser)
+    console.log(uni)
     return (
         <View style={{flex: 1,
             justifyContent: 'center',
@@ -11,9 +17,9 @@ const WelcomeScreen = () => {
         <Text style={{fontSize: 30,
                     fontWeight: 'bold'}}>
             
-            Welcome</Text>
+            {`Welcome ${userName} to ${uni}`}</Text>
         
-        
+
         </View>
 
     );

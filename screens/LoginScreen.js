@@ -15,14 +15,12 @@ const LoginScreen = () => {
 
     const navigation = useNavigation();
 
-    
-
     const handleLogin = async () => {
 
         const checkIfFirstLogin = (docID) => {
             const docRef = doc(FIRESTORE_DB, "users", docID);
             return getDoc(docRef).then((docSnap) => {
-                return docSnap.data().firstLogin;
+                return docSnap.data();
             });
         };
 
@@ -38,9 +36,9 @@ const LoginScreen = () => {
                     return;
                 }
                 //console.log(user.uid)
-                checkIfFirstLogin(user.uid).then(firstLogin => {
-                    if (firstLogin) {
-                        navigation.replace("WelcomeNavigator");
+                checkIfFirstLogin(user.uid).then(userData => {
+                    if (userData.firstLogin) {
+                        navigation.replace("WelcomeNavigator", {uni: userData.uni, userName: userData.userName});
                     } else {
                         navigation.replace("Home")
                     }

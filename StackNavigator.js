@@ -17,16 +17,20 @@ const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createMaterialTopTabNavigator();
 
-  
 
-  const SwipeNavigator = () =>  {
+  const SwipeNavigator = ({route}) =>  {
+    const {uni, userName} = route.params
     return (
       <Tab.Navigator
         initialRouteName="Screen1"
         tabBarOptions={{ style: { display: 'none' } }} // Hides the tab bar
         swipeEnabled={true}
       >
-        <Tab.Screen name="Welcome" component={WelcomeScreen} />
+        {/* <Tab.Screen name="Welcome" component={WelcomeScreen(uni, userName)} /> */}
+        <Tab.Screen name="Welcome">
+          {() => <WelcomeScreen uni={uni} userName={userName} />}
+        </Tab.Screen>
+
         <Tab.Screen name="Preferences" component={PreferenceScreen} />
       </Tab.Navigator>
     );

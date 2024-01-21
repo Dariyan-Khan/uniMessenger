@@ -34,7 +34,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      console.log("hdfgkjasfhga")
       const token = await AsyncStorage.getItem("authToken");
       const decodedToken = jwt_decode(token);
       const userId = decodedToken.userId;
