@@ -77,10 +77,9 @@ const PreferenceScreen = ({uni, userName}) => {
                 <View>
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     Enter your interests </Text>
-                    <InterestBox/>
+                    <InterestBox/> 
                 </View>
 
-                InterestBox
 
                 <Pressable
                     onPress= {() => {}}//{handleLogin}
