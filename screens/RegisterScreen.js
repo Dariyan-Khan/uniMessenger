@@ -5,7 +5,7 @@ import axios from "axios";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth"
 import RNPickerSelect from 'react-native-picker-select';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 
 
@@ -23,16 +23,8 @@ const RegisterScreen = () => {
 
     const email_dict_url = '../university_emails.json'
 
+
     const handleRegister = async () => {
-        const user = {
-            name: name,
-            email: email,
-            password: password,
-            image: image
-        };
-
-        
-
 
         const uni_emails = require(email_dict_url)
 
@@ -56,6 +48,7 @@ const RegisterScreen = () => {
                     userName: name,
                     uni: selectedUni,
                     providerData: userCredential.user.providerData[0],
+                    firstLogin: true
                   };
     
                 setDoc(doc(FIRESTORE_DB, "users", userCredential?.user.uid), user_data).then(

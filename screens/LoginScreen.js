@@ -5,6 +5,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth"
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
@@ -14,11 +15,17 @@ const LoginScreen = () => {
 
     const navigation = useNavigation();
 
+    
+
     const handleLogin = async () => {
-        const user = {
-          email: email,
-          password: password,
-        };  
+
+        const checkIfFirstLogin = (docID) => {
+            console.log("user ID", docID);
+            const docRef = doc(FIRESTORE_DB, "users", docID);
+            return getDoc(docRef).then((docSnap) => {
+                return docSnap.data().firstLogin;
+            });
+        };
 
         setLoading(true)
         try {
@@ -27,22 +34,22 @@ const LoginScreen = () => {
 
                 if(!user.emailVerified){
                     sendEmailVerification(user);
-                    Alert.alert("Please verify your email");
+                    Alert.alert("Please verify your  email");
                     signOut(auth);
                     return;
                 }
-                
+                //console.log(user.uid)
+                checkIfFirstLogin(user.uid).then(firstLogin => {
+                    console.log(firstLogin)
+                })
 
             })
-            console.log(response);
         } catch (error){
             console.log(error);
             alert( 'Sign in failed: ' + error.message);
         } finally {
             setLoading(false);
             }
-
-
     
         // axios
         //   .post("http://localhost:3000/login", user)
@@ -84,7 +91,7 @@ const LoginScreen = () => {
                         width: 300,
                     }}
                     placeholderTextColor={"black"}
-                    placeholder="enter Your Password"/>
+                    placeholder="enter Your Email"/>
                 </View>
 
                 <View>
