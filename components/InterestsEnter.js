@@ -3,11 +3,16 @@ import { View, TextInput, Text, FlatList } from 'react-native';
 import InterestItem from './InterestItem'; // Adjust the path as needed
 
 
-const InterestBox = () => {
+const InterestBox = ({setParentInterest}) => {
     const [interest, setInterest] = useState("");
     const [interestList, setInterestList] = useState([]);
     const [key, setKey] = useState(0);
     const containerHeight = 190;
+
+    useEffect(() => {
+      setParentInterest(interestList);
+    }, [interestList]);
+
 
     const handleEnterPress = () => {
       setInterestList(oldList => [...oldList, interest]);
@@ -45,12 +50,6 @@ const InterestBox = () => {
           />
         </View>
 
-        {/* <FlatList
-        data={interestList}
-        renderItem={({item}) => (
-          <Text>{item}</Text>
-        )}
-       /> */}
         
       </View>
     );

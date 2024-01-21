@@ -10,10 +10,9 @@ import RNPickerSelect from 'react-native-picker-select';
 import InterestBox from '../components/InterestsEnter';
 
 const PreferenceScreen = ({uni, userName}) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [subject, setSubject] = useState("");
   const [year, setYear] = useState("");
+  const [parentInterestList, setParentInterestList] = useState([]);
   const auth = FIREBASE_AUTH;
   const [loading, setLoading] = useState(false)
   const uni_json = require('../university_subjects.json')[uni.trim()]
@@ -41,6 +40,24 @@ const PreferenceScreen = ({uni, userName}) => {
     value: null,
     };
 
+  const handleDataFromChild = (data) => {
+    setParentInterestList(data);
+    };
+
+  const handlePreferences = async () => {
+    if (subject == "" || year == ""){
+      Alert.alert("Please enter your subject and year")
+      return;
+    }
+    
+    if (parentInterestList.length < 3){
+      Alert.alert("Please enter at least 3 interests!")
+      return;
+    }
+
+
+
+  }
 
   return (
     <View style={{flex:1, backgroundColor:"white", padding:10, alignItems:"center"}}>
@@ -77,12 +94,12 @@ const PreferenceScreen = ({uni, userName}) => {
                 <View>
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     Enter your interests </Text>
-                    <InterestBox/> 
+                    <InterestBox setParentInterest={handleDataFromChild}/> 
                 </View>
 
 
                 <Pressable
-                    onPress= {() => {}}//{handleLogin}
+                    onPress= {handlePreferences}//{handleLogin}
                     style={{
                     width: 200,
                     backgroundColor: "#4A55A2",
@@ -99,7 +116,7 @@ const PreferenceScreen = ({uni, userName}) => {
                             fontWeight: "bold",
                             textAlign: "center",
                         }}>
-                        Login
+                        Done
                         </Text>
                 </Pressable>
 
