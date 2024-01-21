@@ -1,0 +1,10 @@
+{ "Imperial College London": 
+    {"Computer Science": ["Year 1", "Year 2", "Year 3", "Year 4"],
+    "Chemistry": ["Year 1", "Year 2", "Year 3", "Year 4"],
+    "Physics": ["Year 1", "Year 2", "Year 3", "Year 4"],
+    "Mathematics": ["Year 1", "Year 2", "Year 3", "Year 4"],
+    "Biology": ["Year 1", "Year 2", "Year 3"],
+    "Mechanical Engineering": ["Year 1", "Year 2", "Year 3", "Year 4"],
+    "Electrical Engineering": ["Year 1", "Year 2", "Year 3", "Year 4"],
+    }
+}

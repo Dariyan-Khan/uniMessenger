@@ -31,8 +31,13 @@ const StackNavigator = () => {
           {() => <WelcomeScreen uni={uni} userName={userName} />}
         </Tab.Screen>
 
-        <Tab.Screen name="Preferences" component={PreferenceScreen} />
+        <Tab.Screen name="Preferences">
+          {() => <PreferenceScreen uni={uni} userName={userName} />}
+        </Tab.Screen>
+
+        {/* <Tab.Screen name="Preferences" component={PreferenceScreen} /> */}
       </Tab.Navigator>
+
     );
   }
 

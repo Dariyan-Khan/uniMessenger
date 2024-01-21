@@ -115,8 +115,6 @@ const RegisterScreen = () => {
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     University </Text>
 
-                    
-
                     <RNPickerSelect
                         placeholder={uniPlaceholder}
                         items={require(uni_list_url)}
