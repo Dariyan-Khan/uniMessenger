@@ -24,9 +24,6 @@ const InterestBox = ({setParentInterest}) => {
                       }
                     });
 
-                    
-
-
       setInterest("");
       setKey(k => k + 1);
     };

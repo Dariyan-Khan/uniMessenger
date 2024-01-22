@@ -1,5 +1,5 @@
 import { View, Text, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,6 +10,12 @@ import RNPickerSelect from 'react-native-picker-select';
 import InterestBox from '../components/InterestsEnter';
 
 const PreferenceScreen = ({uni, userName}) => {
+
+  useEffect(() => {
+    navigation.replace("Home");
+}, []);
+
+
   const [subject, setSubject] = useState("");
   const [year, setYear] = useState("");
   const [parentInterestList, setParentInterestList] = useState([]);

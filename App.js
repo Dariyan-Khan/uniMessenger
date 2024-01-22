@@ -8,12 +8,11 @@ import { AuthContextProvider } from "./context/AuthContext"
 export default function App() {
   return (
     <>
-      {/* <UserContext> */}
+      <UserContext>
       <AuthContextProvider>
           <StackNavigator />
-      </AuthContextProvider>
-        
-      {/* </UserContext> */}
+      </AuthContextProvider>  
+      </UserContext>
     </>
   );
 }

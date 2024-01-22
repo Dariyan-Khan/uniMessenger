@@ -8,6 +8,12 @@ import { signInWithEmailAndPassword, signOut, sendEmailVerification } from "fire
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
+    
+    useEffect(() => {
+        navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
+    }, []);
+
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const auth = FIREBASE_AUTH;
@@ -70,9 +76,7 @@ const LoginScreen = () => {
         //   });
       };
 
-    useEffect(() => {
-        navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
-    }, []);
+    
 
       
      
