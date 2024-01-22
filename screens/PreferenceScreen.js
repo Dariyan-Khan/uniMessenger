@@ -20,6 +20,8 @@ const PreferenceScreen = ({uni, userName}) => {
   let uni_subject_picker_list = []
   let year_picker_list = []
 
+  const navigation = useNavigation();
+
   for (el in uni_subjects) {
   uni_subject_picker_list.push({"label": uni_subjects[el], "value": uni_subjects[el]})
   }
@@ -27,8 +29,6 @@ const PreferenceScreen = ({uni, userName}) => {
   for (el in uni_json[subject]){
     year_picker_list.push({"label": uni_json[subject][el], "value": uni_json[subject][el]})
   }
-  
-  console.log(year_picker_list)
 
   const subjectPlaceholder = {
     label: 'Select your subject',
@@ -49,14 +49,34 @@ const PreferenceScreen = ({uni, userName}) => {
       Alert.alert("Please enter your subject and year")
       return;
     }
-    
+
     if (parentInterestList.length < 3){
       Alert.alert("Please enter at least 3 interests!")
       return;
-    }
+    };
+
+    const user = auth.currentUser;
 
 
+    const addDataToUser = async () => {
+      const docRef = doc(FIRESTORE_DB, "users", user.uid);
+      try {
+        await setDoc(docRef, {
+          subject: subject,
+          year: year,
+          interests: parentInterestList
+        }, { merge: true });
 
+        console.log('Document created/updated successfully');
+      } catch (error) {
+        console.error('Error creating/updating document:', error);
+      }
+    };
+
+    addDataToUser().then(() => {
+      navigation.replace("Home")
+
+    })
   }
 
   return (
@@ -131,4 +151,4 @@ const PreferenceScreen = ({uni, userName}) => {
   )
 }
 
-export default PreferenceScreen
+export default PreferenceScreen;

@@ -17,6 +17,8 @@ const LoginScreen = () => {
 
     const handleLogin = async () => {
 
+        setLoading(true)
+
         const checkIfFirstLogin = (docID) => {
             const docRef = doc(FIRESTORE_DB, "users", docID);
             return getDoc(docRef).then((docSnap) => {
@@ -24,7 +26,7 @@ const LoginScreen = () => {
             });
         };
 
-        setLoading(true)
+        
         try {
             const response = await signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
                 const user = userCredential.user;
@@ -33,6 +35,7 @@ const LoginScreen = () => {
                     sendEmailVerification(user);
                     Alert.alert("Please verify your  email");
                     signOut(auth);
+                    setLoading(false);
                     return;
                 }
                 //console.log(user.uid)
@@ -47,7 +50,7 @@ const LoginScreen = () => {
             })
         } catch (error){
             console.log(error);
-            alert( 'Sign in failed: ' + error.message);
+            alert('Sign in failed: ' + error.message);
         } finally {
             setLoading(false);
             }

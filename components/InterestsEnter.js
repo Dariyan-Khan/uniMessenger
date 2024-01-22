@@ -15,7 +15,18 @@ const InterestBox = ({setParentInterest}) => {
 
 
     const handleEnterPress = () => {
-      setInterestList(oldList => [...oldList, interest]);
+      setInterestList(oldList => {
+                      if (interest === "" || oldList.includes(interest.toLowerCase())) {
+                        return oldList; 
+                      }
+                      else {
+                        return [...oldList, interest.toLowerCase()]
+                      }
+                    });
+
+                    
+
+
       setInterest("");
       setKey(k => k + 1);
     };
