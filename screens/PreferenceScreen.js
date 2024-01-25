@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
-import { signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth"
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import RNPickerSelect from 'react-native-picker-select';
 import InterestBox from '../components/InterestsEnter';
@@ -12,7 +11,7 @@ import InterestBox from '../components/InterestsEnter';
 const PreferenceScreen = ({uni, userName}) => {
 
   useEffect(() => {
-    navigation.replace("Home");
+    navigation.replace("HomeScreen", {uni: "Imperial College London ", userName: "Dariyan"});
 }, []);
 
 
@@ -80,7 +79,7 @@ const PreferenceScreen = ({uni, userName}) => {
     };
 
     addDataToUser().then(() => {
-      navigation.replace("Home")
+      navigation.replace("Home", {uni: uni, userName: userName});
 
     })
   }
