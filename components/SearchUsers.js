@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, SafeAreaView } from 'react-native';
+import { StyleSheet, View, TextInput, SafeAreaView, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const SearchBarComponent = () => {
@@ -15,6 +15,7 @@ const SearchBarComponent = () => {
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
+        <Text>more...</Text>
       </View>
       {/* Rest of your component */}
     </SafeAreaView>

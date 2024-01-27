@@ -71,7 +71,7 @@ const HomeScreen = ({route}) => {
       <View style={{padding:8}}>
         <SearchBarComponent />
       </View>
-      
+
         <ScrollView style={styles.scrollView}>
           <View style={styles.messagesContainer}>
             <View style={styles.messagesHeader}>
@@ -115,6 +115,7 @@ const HomeScreen = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 24 
   },
   titleView: {
     // Remove flex: 1 and explicitly set the height if needed
@@ -153,7 +154,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: '100%', 
-    paddingTop: 4,
+    paddingTop: 16,
+
   },
   messagesContainer: {
     width: '100%',
