@@ -15,6 +15,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "../components/ChatCard";
+import SearchBarComponent from "../components/SearchUsers";
 
 
 const HomeScreen = ({route}) => {
@@ -49,9 +50,12 @@ const HomeScreen = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ padding: 10 }}>
       <SafeAreaView>
-        <View style={styles.header}>
+
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.title}>{`${userName}'s Space`}</Text>
+        </View>
           <TouchableOpacity
             onPress={() => navigation.navigate("ProfileScreen")}
             style={styles.profileButton}
@@ -63,7 +67,11 @@ const HomeScreen = ({route}) => {
             />
           </TouchableOpacity>
         </View>
-  
+
+      <View style={{padding:8}}>
+        <SearchBarComponent />
+      </View>
+      
         <ScrollView style={styles.scrollView}>
           <View style={styles.messagesContainer}>
             <View style={styles.messagesHeader}>
@@ -108,12 +116,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  titleView: {
+    // Remove flex: 1 and explicitly set the height if needed
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 16
+  },
+  title: {
+    color: "black",
+    fontSize: 30,
+    fontWeight: "600",
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: 'flex-end'
+  },
   header: {
-    width: '100%', 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
-    paddingHorizontal: 4, 
+    width: '100%',
+    flexDirection: 'row',
+    //alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 4,
     paddingVertical: 2,
   },
   profileButton: {
@@ -155,6 +177,10 @@ const styles = StyleSheet.create({
   },
   // ... define other styles as needed
   });
+
+
+
+  
 
 
 {/* <View>
