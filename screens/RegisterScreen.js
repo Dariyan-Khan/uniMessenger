@@ -46,7 +46,7 @@ const RegisterScreen = () => {
                 const user_data = {
                     _id: userCredential?.user.uid,
                     userName: name,
-                    uni: selectedUni,
+                    uni: selectedUni.trim(),
                     providerData: userCredential.user.providerData[0],
                     firstLogin: true
                   };

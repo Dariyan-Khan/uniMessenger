@@ -75,9 +75,6 @@ const LoginScreen = () => {
         //     console.log("Login Error", error);
         //   });
       };
-
-    
-
       
      
     return (
