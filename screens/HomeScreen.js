@@ -9,13 +9,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useLayoutEffect, useState, useContext, useEffect } from "react";
-//import { useSelector } from "react-redux";
-//import { Logo } from "../assets";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import User from "../components/User";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
+import { faker } from '@faker-js/faker';
+import ChatCard from "../components/ChatCard";
 
 
 const HomeScreen = ({route}) => {
@@ -24,18 +23,22 @@ const HomeScreen = ({route}) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [chats, setChats] = useState(null);
+  
 
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
     const chatQuery = query(
       collection(FIRESTORE_DB, "chats"),
-      orderBy("_id", "desc")
+      orderBy("_id", "desc") // Desc stands for descending
     );
+
+    console.log("chatQuery", chatQuery);
 
     const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
       const chatRooms = querySnapShot.docs.map((doc) => doc.data());
       setChats(chatRooms);
+      console.log("chatRooms", chatRooms);
       setIsLoading(false);
     });
 
@@ -45,59 +48,55 @@ const HomeScreen = ({route}) => {
 
 
   return (
-    <View className="flex-1">
+    <View style={styles.container}>
+      <View style={{ padding: 10 }}>
       <SafeAreaView>
-        <View className="w-full flex-row items-center justify-between px-4 py-2">
-          {/* <Image source={Logo} className="w-12 h-12" resizeMode="contain" /> */}
-
+        <View style={styles.header}>
           <TouchableOpacity
             onPress={() => navigation.navigate("ProfileScreen")}
-            className="w-12 h-12 rounded-full border border-primary flex items-center justify-center"
+            style={styles.profileButton}
           >
-            {/* <Image
-              source={{ uri: user?.profilePic }}
-              className="w-full h-full"
+            <Image
+              source={{ uri: faker.image.avatar() }}
+              style={styles.profileImage}
               resizeMode="cover"
-            /> */}
+            />
           </TouchableOpacity>
         </View>
-
-        {/* scrolling area */}
-        <ScrollView className="w-full px-4 pt-4">
-          <View className="w-full">
-            {/* meesages title */}
-            <View className="w-full flex-row items-center justify-between px-2">
-              <Text className="text-primaryText text-base font-extrabold pb-2">
+  
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.messagesContainer}>
+            <View style={styles.messagesHeader}>
+              <Text style={styles.messagesTitle}>
                 Messages
               </Text>
-
+  
               <TouchableOpacity
                 onPress={() => navigation.navigate("AddToChatScreen")}
               >
                 <Ionicons name="chatbox" size={28} color="#555" />
               </TouchableOpacity>
             </View>
-
             {isLoading ? (
-              <>
-                <View className="w-full flex items-center justify-center">
-                  <ActivityIndicator size={"large"} color={"#43C651"} />
-                </View>
-              </>
-            ) : (
-              <>
-                {chats && chats?.length > 0 ? (
-                  <>
-                    {chats?.map((room) => (
-                      //<MessageCard key={room._id} room={room} />
-                      <Text>Room</Text>
-                    ))}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
+                <>
+                  <View className="w-full flex items-center justify-center">
+                    <ActivityIndicator size={"large"} color={"#43C651"} />
+                  </View>
+                </>
+              ) : (
+                <>
+                  {chats && chats?.length > 0 ? (
+                    <>
+                      {chats?.map((room) => (
+                        <ChatCard key={room._id} room={room}/>
+                        //<Text>room.uid</Text>
+                      ))}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -105,9 +104,57 @@ const HomeScreen = ({route}) => {
   );
 };
 
-export default HomeScreen;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    width: '100%', 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    paddingHorizontal: 4, 
+    paddingVertical: 2,
+  },
+  profileButton: {
+    width: 48, 
+    height: 48, 
+    borderRadius: 24, 
+    borderWidth: 2, 
+    borderColor: 'blue', // Replace 'blue' with your primary color
+    alignItems: 'center', 
+    justifyContent: 'center',
+  },
+  profileImage: {
+    width: '100%', 
+    height: '100%',
+  },
+  scrollView: {
+    width: '100%', 
+    paddingTop: 4,
+  },
+  messagesContainer: {
+    width: '100%',
+  },
+  messagesHeader: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    paddingHorizontal: 2,
+  },
+  messagesTitle: {
+    color: 'black', // Replace with your primaryText color
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    paddingBottom: 2,
+  },
+  loadingContainer: {
+    width: '100%', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+  },
+  // ... define other styles as needed
+  });
 
 
 {/* <View>
@@ -117,3 +164,5 @@ const styles = StyleSheet.create({});
   ))}
 </View>
 </View> */}
+
+export default HomeScreen;

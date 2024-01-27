@@ -1,3 +1,6 @@
+// Need to add   "type": "module", to package.json in order to use import statements
+// and hance for this code to work
+// But remove it then afterwards in order to run the app
 
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { faker } from '@faker-js/faker';
