@@ -43,48 +43,6 @@ const HomeScreen = ({route}) => {
     return unsubscribe;
   }, []);
 
- // const [users, setUsers] = useState([]);
-
-
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerTitle: "",
-  //     headerLeft: () => (
-  //       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Swift Chat</Text>
-  //     ),
-  //     headerRight: () => (
-  //       <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-  //         <Ionicons onPress={() => navigation.navigate("Chats")} name="chatbox-ellipses-outline" size={24} color="black" />
-  //         <MaterialIcons
-  //           onPress={() => navigation.navigate("Friends")}
-  //           name="people-outline"
-  //           size={24}
-  //           color="black"
-  //         />
-  //       </View>
-  //     ),
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const token = await AsyncStorage.getItem("authToken");
-  //     const decodedToken = jwt_decode(token);
-  //     const userId = decodedToken.userId;
-  //     setUserId(userId);
-
-  //     axios
-  //       .get(`http://localhost:3000/users/${userId}`)
-  //       .then((response) => {
-  //         setUsers(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log("error retrieving users", error);
-  //       });
-  //   };
-
-  //   fetchUsers();
-  // }, []);
 
   return (
     <View className="flex-1">
