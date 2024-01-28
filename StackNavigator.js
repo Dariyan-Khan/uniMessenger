@@ -11,11 +11,41 @@ import ChatMessagesScreen from "./screens/ChatMessagesScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import PreferenceScreen from "./screens/PreferenceScreen";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
+
 
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createMaterialTopTabNavigator();
+
+
+  // const ChatsNavigator = ({route}) =>  {
+  //   const {uni, userName} = route.params
+  //   return (
+  //     <Tab.Navigator
+  //       initialRouteName="ChatScreen1"
+  //       //tabBarOptions={{ style: { display: 'none' } }} // Hides the tab bar
+  //       //swipeEnabled={true}
+  //     >
+  //       {/* <Tab.Screen name="Welcome" component={WelcomeScreen(uni, userName)} /> */}
+  //       <Tab.Screen name="YourChats">
+  //         {() => <YourChats uni={uni} userName={userName} />}
+  //       </Tab.Screen>
+
+  //       <Tab.Screen name="GeneralChat">
+  //         {() => <GeneralChat uni={uni} userName={userName} />}
+  //       </Tab.Screen>
+
+  //       {/* <Tab.Screen name="Preferences" component={PreferenceScreen} /> */}
+  //     </Tab.Navigator>
+
+  //   );
+  // }
+
+
 
 
   const SwipeNavigator = ({route}) =>  {
@@ -64,6 +94,8 @@ const StackNavigator = () => {
         <Stack.Screen name="Messages" component={ChatMessagesScreen} />
 
         <Stack.Screen name="WelcomeNavigator" component={SwipeNavigator} options={{ headerShown: false }}/>
+
+        {/* <Stack.Screen name="ChatsNavigator" component={ChatsNavigator} options={{ headerShown: false }}/> */}
 
       </Stack.Navigator>
     </NavigationContainer>

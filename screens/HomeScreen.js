@@ -16,12 +16,16 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "../components/ChatCard";
 import SearchBarComponent from "../components/SearchUsers";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ChatsNavigator from '../components/ChatNavigator';
+
 
 
 const HomeScreen = ({route}) => {
+
+
   const { uni, userName } = route.params;
   const auth = FIREBASE_AUTH;
-
   const [isLoading, setIsLoading] = useState(true);
   const [chats, setChats] = useState(null);
   
@@ -67,6 +71,8 @@ const HomeScreen = ({route}) => {
             />
           </TouchableOpacity>
         </View>
+
+      <ChatsNavigator/>
 
       <View style={{padding:8}}>
         <SearchBarComponent />
