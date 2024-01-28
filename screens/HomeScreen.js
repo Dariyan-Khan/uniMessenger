@@ -36,24 +36,24 @@ const HomeScreen = ({route}) => {
     setParentTab(data);
     };
 
-  useLayoutEffect(() => {
-    const chatQuery = query(
-      collection(FIRESTORE_DB, "chats"),
-      orderBy("_id", "desc") // Desc stands for descending
-    );
+  // useLayoutEffect(() => {
+  //   const chatQuery = query(
+  //     collection(FIRESTORE_DB, "chats"),
+  //     orderBy("_id", "desc") // Desc stands for descending
+  //   );
 
-    console.log("chatQuery", chatQuery);
+  //   console.log("chatQuery", chatQuery);
 
-    const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
-      const chatRooms = querySnapShot.docs.map((doc) => doc.data());
-      setChats(chatRooms);
-      console.log("chatRooms", chatRooms);
-      setIsLoading(false);
-    });
+  //   const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
+  //     const chatRooms = querySnapShot.docs.map((doc) => doc.data());
+  //     setChats(chatRooms);
+  //     console.log("chatRooms", chatRooms);
+  //     setIsLoading(false);
+  //   });
 
-    //  Return the unsubscribe funciton to stop listening to the updates
-    return unsubscribe;
-  }, []);
+  //   //  Return the unsubscribe funciton to stop listening to the updates
+  //   return unsubscribe;
+  // }, []);
 
 
   return (
@@ -75,52 +75,16 @@ const HomeScreen = ({route}) => {
             />
           </TouchableOpacity>
         </View>
+      
+        <ChatToggle setParentTab={handleTabFromChild}/>
+      
 
-      <ChatToggle setParentTab={handleTabFromChild}/>
+      <View style={{}}>
+        {parentTab === 'YourChats' ? <YourChats/> :
+        parentTab === 'GeneralChat' ? <GeneralChat/> :
+        <Text>Something went wrong</Text>}
+       </View>
 
-      {parentTab === 'YourChats' ? <YourChats /> :
-       parentTab === 'GeneralChat' ? <GeneralChat /> :
-       <Text>Something went wrong</Text>}
-{/* 
-      <View style={{padding:8}}>
-        <SearchBarComponent />
-      </View>
-
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.messagesContainer}>
-            <View style={styles.messagesHeader}>
-              <Text style={styles.messagesTitle}>
-                Messages
-              </Text>
-  
-              <TouchableOpacity
-                onPress={() => navigation.navigate("AddToChatScreen")}
-              >
-                <Ionicons name="add" size={28} color="#555" />
-              </TouchableOpacity>
-            </View>
-            {isLoading ? (
-                <>
-                  <View className="w-full flex items-center justify-center">
-                    <ActivityIndicator size={"large"} color={"#43C651"} />
-                  </View>
-                </>
-              ) : (
-                <>
-                  {chats && chats?.length > 0 ? (
-                    <>
-                      {chats?.map((room) => (
-                        <ChatCard key={room._id} room={room}/>
-                        //<Text>room.uid</Text>
-                      ))}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </>
-              )}
-          </View>
-        </ScrollView> */}
       </SafeAreaView>
     </View>
   );
@@ -128,7 +92,11 @@ const HomeScreen = ({route}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
+    mainView: {
+      width: "100%",
+      height: "100%"
+   },
     marginTop: 24 
   },
   titleView: {
@@ -193,18 +161,5 @@ const styles = StyleSheet.create({
   },
   // ... define other styles as needed
   });
-
-
-
-  
-
-
-{/* <View>
-<View style={{ padding: 10 }}>
-  {users.map((item, index) => (
-    <User key={index} item={item} />
-  ))}
-</View>
-</View> */}
 
 export default HomeScreen;

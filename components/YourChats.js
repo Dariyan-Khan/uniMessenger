@@ -50,24 +50,29 @@ const YourChats = () => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
 
       <View style={{padding:8}}>
         <SearchBarComponent />
       </View>
+      {/* <Text style={styles.messagesTitle}>
+                Messages
+              </Text> */}
+
+    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AddToChatScreen")}
+        style={{ padding: 4 }}
+      >
+        <Ionicons name="add" size={28} color="#555" />
+      </TouchableOpacity>
+    </View>
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.messagesContainer}>
             <View style={styles.messagesHeader}>
-              <Text style={styles.messagesTitle}>
-                Messages
-              </Text>
+              
   
-              <TouchableOpacity
-                onPress={() => navigation.navigate("AddToChatScreen")}
-              >
-                <Ionicons name="add" size={28} color="#555" />
-              </TouchableOpacity>
+              
             </View>
             {isLoading ? (
                 <>
@@ -91,78 +96,44 @@ const YourChats = () => {
               )}
           </View>
         </ScrollView>
-      </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 24 
-  },
-  titleView: {
-    // Remove flex: 1 and explicitly set the height if needed
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 16
-  },
-  title: {
-    color: "black",
-    fontSize: 30,
-    fontWeight: "600",
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: 'flex-end'
-  },
-  header: {
-    width: '100%',
-    flexDirection: 'row',
-    //alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-  },
-  profileButton: {
-    width: 48, 
-    height: 48, 
-    borderRadius: 24, 
-    borderWidth: 2, 
-    borderColor: 'blue', // Replace 'blue' with your primary color
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
-  profileImage: {
-    width: '100%', 
-    height: '100%',
+    backgroundColor: '#fff',
+    flex: 0,
+    height:"100%" // Consider setting a background color for consistency // This ensures your view fills the available space
   },
   scrollView: {
-    width: '100%', 
-    paddingTop: 16,
-
+    flex: 0, // This ensures your ScrollView takes up the available space
   },
   messagesContainer: {
-    width: '100%',
+    flex: 0, // Use flex to ensure it expands as needed
+    paddingHorizontal: 10, // Add some horizontal padding for better spacing
   },
   messagesHeader: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
-    paddingHorizontal: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10, // Uniform padding for the header
+    //borderBottomWidth: 1, // Adds a subtle line to separate the header
+    //borderBottomColor: '#ddd', // Light color for the separator line
   },
   messagesTitle: {
-    color: 'black', // Replace with your primaryText color
-    fontSize: 16, 
-    fontWeight: 'bold', 
-    paddingBottom: 2,
+    color: 'black',
+    fontSize: 20, // Slightly larger for better visibility
+    fontWeight: 'bold',
   },
   loadingContainer: {
-    width: '100%', 
-    alignItems: 'center', 
+    flex: 0, // Ensure it takes up the full container height
+    alignItems: 'center',
     justifyContent: 'center',
   },
-  // ... define other styles as needed
-  });
+  // Other styles remain unchanged
+});
+
 
 
 
