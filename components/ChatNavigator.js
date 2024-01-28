@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const ChatToggle = () => {
+const ChatToggle = ({setParentTab}) => {
   const [selectedChat, setSelectedChat] = useState('YourChats');
+
+
+  useEffect(() => {
+    setParentTab(selectedChat);
+  }, [selectedChat]);
 
   const handleYourChatsPress = () => {
     setSelectedChat('YourChats');

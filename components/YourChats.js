@@ -14,27 +14,19 @@ import { useNavigation } from "@react-navigation/native";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
-import ChatCard from "../components/ChatCard";
-import SearchBarComponent from "../components/SearchUsers";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ChatToggle from '../components/ChatNavigator';
-import YourChats from '../components/YourChats';
-import GeneralChat from '../components/GeneralChat';
+import ChatCard from "./ChatCard";
+import SearchBarComponent from "./SearchUsers";
 
 
 
-const HomeScreen = ({route}) => {
-
-  const { uni, userName } = route.params;
+const YourChats = () => {
+  //const { uni, userName } = route.params;
   const auth = FIREBASE_AUTH;
   const [isLoading, setIsLoading] = useState(true);
   const [chats, setChats] = useState(null);
-  const [parentTab, setParentTab] = useState('YourChats');
-  const navigation = useNavigation();
+  
 
-  const handleTabFromChild = (data) => {
-    setParentTab(data);
-    };
+  const navigation = useNavigation();
 
   useLayoutEffect(() => {
     const chatQuery = query(
@@ -60,28 +52,6 @@ const HomeScreen = ({route}) => {
     <View style={styles.container}>
       <SafeAreaView>
 
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.title}>{`${userName}'s Space`}</Text>
-        </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ProfileScreen")}
-            style={styles.profileButton}
-          >
-            <Image
-              source={{ uri: faker.image.avatar() }}
-              style={styles.profileImage}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>
-        </View>
-
-      <ChatToggle setParentTab={handleTabFromChild}/>
-
-      {parentTab === 'YourChats' ? <YourChats /> :
-       parentTab === 'GeneralChat' ? <GeneralChat /> :
-       <Text>Something went wrong</Text>}
-{/* 
       <View style={{padding:8}}>
         <SearchBarComponent />
       </View>
@@ -120,7 +90,7 @@ const HomeScreen = ({route}) => {
                 </>
               )}
           </View>
-        </ScrollView> */}
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
@@ -207,4 +177,4 @@ const styles = StyleSheet.create({
 </View>
 </View> */}
 
-export default HomeScreen;
+export default YourChats;
