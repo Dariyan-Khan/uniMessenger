@@ -16,6 +16,7 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "./ChatCard";
 import SearchComponent from "./SearchUsers";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -55,8 +56,11 @@ const YourChats = () => {
                 Messages
               </Text> */}
 
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between',paddingTop:16, paddingLeft: 8, paddingRight:8 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between',paddingTop:16, paddingLeft: 0, paddingRight:8 }}>
     <SearchComponent />
+    {/* <TouchableOpacity>
+      <Icon name="search" size={20} color="#000"/>
+    </TouchableOpacity> */}
       <TouchableOpacity
         onPress={() => navigation.navigate("AddToChatScreen")}
         style={{}}
@@ -65,12 +69,11 @@ const YourChats = () => {
       </TouchableOpacity>
     </View>
 
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}
+        alwaysBounceVertical={false}>
           <View style={styles.messagesContainer}>
             <View style={styles.messagesHeader}>
-              
-  
-              
+
             </View>
             {isLoading ? (
                 <>

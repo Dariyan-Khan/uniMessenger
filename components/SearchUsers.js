@@ -1,60 +1,7 @@
-// import React, { useState } from 'react';
-// import { StyleSheet, View, TextInput, SafeAreaView, Text } from 'react-native';
-// import { Ionicons } from '@expo/vector-icons';
-
-// const SearchBarComponent = () => {
-//   const [searchQuery, setSearchQuery] = useState(''); 
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <View style={styles.searchSection}>
-//         <Ionicons style={styles.searchIcon} name="ios-search" size={20} color="#000"/>
-//         <TextInput
-//           style={styles.searchInput}
-//           placeholder="Search..."
-//           value={searchQuery}
-//           onChangeText={setSearchQuery}
-//         />
-//         <Text>more...</Text>
-//       </View>
-//       {/* Rest of your component */}
-//     </SafeAreaView>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   searchSection: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     backgroundColor: '#fff',
-//     borderRadius: 20,
-//     margin: 12,
-//     paddingHorizontal: 10,
-//     shadowColor: '#000',
-//     shadowOffset: { width: 0, height: 2 },
-//     shadowOpacity: 0.25,
-//     shadowRadius: 3.84,
-//     elevation: 5,
-//   },
-//   searchIcon: {
-//     padding: 10,
-//   },
-//   searchInput: {
-//     flex: 1,
-//     padding: 10,
-//     borderRadius: 20,
-//     fontSize: 16,
-//   },
-// });
-
-// export default SearchBarComponent;
 import React, { useState, useEffect } from 'react';
 import { Animated, TouchableOpacity, TextInput, StyleSheet, View, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SearchBarComponent from './SearchBar';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -66,7 +13,7 @@ const SearchComponent = () => {
     if (isExpanded) {
       Animated.timing(animationValue, {
         toValue: 1,
-        duration: 300,
+        duration: 100,
         useNativeDriver: false,
       }).start();
     } else {
@@ -93,10 +40,11 @@ const SearchComponent = () => {
     <View style={styles.container}>
       <Animated.View style={animatedStyle}>
         {isExpanded ? (
-          <TextInput style={styles.input} placeholder="Search..." autoFocus />
+          //<TextInput style={styles.input} placeholder="Search..." autoFocus />
+          <SearchBarComponent style={{justifyContent: 'centre', padding:0}}  />
         ) : (
           <TouchableOpacity onPress={() => setIsExpanded(true)}>
-            <Icon name="search" size={20} color="#000" />
+            <Icon name="search" size={18} color="#000" style={{paddingLeft:8, paddingTop:6}}/>
           </TouchableOpacity>
         )}
       </Animated.View>

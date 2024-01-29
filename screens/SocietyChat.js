@@ -135,7 +135,7 @@ import {
                   <>
                     <View className="w-full flex items-center justify-center">
                       <ActivityIndicator size={"large"} color={"#43C651"} />
-                    </View>
+                    </View> 
                   </>
                 ) : (
                   <>
