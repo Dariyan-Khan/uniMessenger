@@ -15,7 +15,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "./ChatCard";
-import SearchBarComponent from "./SearchUsers";
+import SearchComponent from "./SearchUsers";
 
 
 
@@ -51,19 +51,17 @@ const YourChats = () => {
   return (
     <View style={styles.container}>
 
-      <View style={{padding:8}}>
-        <SearchBarComponent />
-      </View>
       {/* <Text style={styles.messagesTitle}>
                 Messages
               </Text> */}
 
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between',paddingTop:16, paddingLeft: 8, paddingRight:8 }}>
+    <SearchComponent />
       <TouchableOpacity
         onPress={() => navigation.navigate("AddToChatScreen")}
-        style={{ padding: 4 }}
+        style={{}}
       >
-        <Ionicons name="add" size={28} color="#555" />
+        <Ionicons name="add" size={28} color="black" />
       </TouchableOpacity>
     </View>
 

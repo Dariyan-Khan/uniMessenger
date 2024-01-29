@@ -15,7 +15,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "../components/ChatCard";
-import SearchBarComponent from "../components/SearchUsers";
+import SearchComponent from "../components/SearchUsers";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ChatToggle from '../components/ChatNavigator';
 import YourChats from '../components/YourChats';
