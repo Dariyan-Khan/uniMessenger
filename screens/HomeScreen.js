@@ -36,24 +36,24 @@ const HomeScreen = ({route}) => {
     setParentTab(data);
     };
 
-  // useLayoutEffect(() => {
-  //   const chatQuery = query(
-  //     collection(FIRESTORE_DB, "chats"),
-  //     orderBy("_id", "desc") // Desc stands for descending
-  //   );
+  useLayoutEffect(() => {
+    const chatQuery = query(
+      collection(FIRESTORE_DB, "chats"),
+      orderBy("_id", "desc") // Desc stands for descending
+    );
 
-  //   console.log("chatQuery", chatQuery);
+    console.log("chatQuery", chatQuery);
 
-  //   const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
-  //     const chatRooms = querySnapShot.docs.map((doc) => doc.data());
-  //     setChats(chatRooms);
-  //     console.log("chatRooms", chatRooms);
-  //     setIsLoading(false);
-  //   });
+    const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
+      const chatRooms = querySnapShot.docs.map((doc) => doc.data());
+      setChats(chatRooms);
+      console.log("chatRooms", chatRooms);
+      setIsLoading(false);
+    });
 
-  //   //  Return the unsubscribe funciton to stop listening to the updates
-  //   return unsubscribe;
-  // }, []);
+    //  Return the unsubscribe funciton to stop listening to the updates
+    return unsubscribe;
+  }, []);
 
 
   return (
