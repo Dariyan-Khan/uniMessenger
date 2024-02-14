@@ -70,9 +70,9 @@ const LoginScreen = () => {
         //   });
       };
 
-    useEffect(() => {
-        navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
-    }, []);
+    // useEffect(() => {
+    //     navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
+    // }, []);
 
       
      
