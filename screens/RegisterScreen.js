@@ -6,6 +6,7 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth"
 import RNPickerSelect from 'react-native-picker-select';
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import {Dropdown} from 'react-native-element-dropdown';
 
 
 
@@ -18,6 +19,7 @@ const RegisterScreen = () => {
     const navigation = useNavigation();
     const auth = FIREBASE_AUTH;
     const [loading, setLoading] = useState(false)
+    const [isFocus, setIsFocus] = useState(false);
 
     const uni_list_url = '../university_list.json'
 
@@ -115,12 +117,38 @@ const RegisterScreen = () => {
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     University </Text>
 
-                    <RNPickerSelect
+                    {/* <RNPickerSelect
                         placeholder={uniPlaceholder}
                         items={require(uni_list_url)}
                         onValueChange={(value) => setUni(value)}
                         value={selectedUni}
+                    /> */}
+
+                    <Dropdown
+                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={require(uni_list_url)}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isFocus ? 'Select University' : '...'}
+                    searchPlaceholder="Search..."
+                    value={selectedUni}
+                    onFocus={() => setIsFocus(true)}
+                    onBlur={() => setIsFocus(false)}
+                    onChange={item => {
+                        setUni(item.value);
+                        // handleState(item.value);
+                        // setCountryName(item.label);
+                        setIsFocus(false);
+                         }}
                     />
+
+
 
                 </View>
 
@@ -217,4 +245,46 @@ const RegisterScreen = () => {
 
 export default RegisterScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#533483',
+      padding: 16,
+      justifyContent: 'center',
+      alignContent: 'center',
+    },
+    dropdown: {
+      height: 50,
+      borderColor: 'gray',
+      borderWidth: 0.5,
+      borderRadius: 8,
+      paddingHorizontal: 8,
+      marginTop: 10,
+    },
+    icon: {
+      marginRight: 5,
+    },
+    label: {
+      position: 'absolute',
+      backgroundColor: 'white',
+      left: 22,
+      top: 8,
+      zIndex: 999,
+      paddingHorizontal: 8,
+      fontSize: 14,
+    },
+    placeholderStyle: {
+      fontSize: 16,
+    },
+    selectedTextStyle: {
+      fontSize: 16,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+    inputSearchStyle: {
+      height: 40,
+      fontSize: 16,
+    },
+  });
