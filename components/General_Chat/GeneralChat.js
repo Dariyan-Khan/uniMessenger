@@ -20,10 +20,10 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
-import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FirebaseConfig";
 import { faker } from '@faker-js/faker';
-import ChatCard from "./ChatCard";
-import SearchBarComponent from "./SearchUsers";
+import ChatCard from "../ChatCard";
+import SearchBarComponent from "../Search/SearchUsers";
 
 
 

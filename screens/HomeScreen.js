@@ -15,11 +15,11 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "../components/ChatCard";
-import SearchComponent from "../components/SearchUsers";
+import SearchComponent from "../components/Search/SearchUsers";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ChatToggle from '../components/ChatNavigator';
 import YourChats from '../components/YourChats';
-import GeneralChat from '../components/GeneralChat';
+import GeneralChat from '../components/General_Chat/GeneralChat';
 
 
 

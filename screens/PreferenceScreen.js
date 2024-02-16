@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import RNPickerSelect from 'react-native-picker-select';
-import InterestBox from '../components/InterestsEnter';
+import InterestBox from '../Interests/components/InterestsEnter';
 import {Dropdown} from 'react-native-element-dropdown';
 
 const PreferenceScreen = ({uni, userName}) => {

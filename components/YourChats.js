@@ -15,7 +15,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "./ChatCard";
-import SearchComponent from "./SearchUsers";
+import SearchComponent from "./Search/SearchUsers";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
