@@ -87,7 +87,7 @@ const PreferenceScreen = ({uni, userName}) => {
     };
 
     addDataToUser().then(() => {
-      navigation.replace("Home", {uni: uni, userName: userName});
+      navigation.replace("HomeScreen", {uni: uni, userName: userName});
 
     })
   }
