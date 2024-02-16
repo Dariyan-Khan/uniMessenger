@@ -75,7 +75,7 @@ const PreferenceScreen = ({uni, userName}) => {
       const docRef = doc(FIRESTORE_DB, "users", user.uid);
       try {
         await setDoc(docRef, {
-          subject: subject,
+          subject: subject, 
           year: year,
           interests: parentInterestList
         }, { merge: true });
