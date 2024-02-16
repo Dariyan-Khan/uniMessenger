@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
+import {StyleSheet, View, Text, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
@@ -7,12 +7,13 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import RNPickerSelect from 'react-native-picker-select';
 import InterestBox from '../components/InterestsEnter';
+import {Dropdown} from 'react-native-element-dropdown';
 
 const PreferenceScreen = ({uni, userName}) => {
 
-  useEffect(() => {
-    navigation.replace("HomeScreen", {uni: "Imperial College London ", userName: "Dariyan"});
-}, []);
+//   useEffect(() => {
+//     navigation.replace("HomeScreen", {uni: "Imperial College London ", userName: "Dariyan"});
+// }, []);
 
 
   const [subject, setSubject] = useState("");
@@ -24,6 +25,7 @@ const PreferenceScreen = ({uni, userName}) => {
   const uni_subjects = Object.keys(uni_json);
   let uni_subject_picker_list = []
   let year_picker_list = []
+  const [isSubjectFocus, setIsSubjectFocus] = useState(false)
 
   const navigation = useNavigation();
 
@@ -95,11 +97,29 @@ const PreferenceScreen = ({uni, userName}) => {
                 <View>
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     Choose your subject </Text>
-                    <RNPickerSelect
-                        placeholder={subjectPlaceholder}
-                        items={uni_subject_picker_list}
-                        onValueChange={(value) => setSubject(value)}
-                        value={subject}
+
+                  <Dropdown
+                    style={[styles.dropdown, isSubjectFocus && {borderColor: 'blue'}]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={uni_subject_picker_list}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isSubjectFocus ? 'Select Subject' : '...'}
+                    searchPlaceholder="Search..."
+                    value={subject}
+                    onFocus={() => setIsSubjectFocus(true)}
+                    onBlur={() => setIsSubjectFocus(false)}
+                    onChange={item => {
+                      setSubject(item.value);
+                        // handleState(item.value);
+                        // setCountryName(item.label);
+                        setIsSubjectFocus(false);
+                         }}
                     />
                     
                 </View>
@@ -157,3 +177,48 @@ const PreferenceScreen = ({uni, userName}) => {
 }
 
 export default PreferenceScreen;
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#533483',
+    padding: 16,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginTop: 10,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});

@@ -9,9 +9,9 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
     
-    // useEffect(() => {
-    //     navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
-    // }, []);
+    useEffect(() => {
+        navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
+    }, []);
 
 
     const [email, setEmail] = useState("");
