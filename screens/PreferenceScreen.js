@@ -19,13 +19,19 @@ const PreferenceScreen = ({uni, userName}) => {
   const [subject, setSubject] = useState("");
   const [year, setYear] = useState("");
   const [parentInterestList, setParentInterestList] = useState([]);
+  const [isSubjectFocus, setIsSubjectFocus] = useState(false);
+  const [isYearFocus, setIsYearFocus] = useState(false);
+
+
   const auth = FIREBASE_AUTH;
   const [loading, setLoading] = useState(false)
+
   const uni_json = require('../university_subjects.json')[uni.trim()]
   const uni_subjects = Object.keys(uni_json);
   let uni_subject_picker_list = []
   let year_picker_list = []
-  const [isSubjectFocus, setIsSubjectFocus] = useState(false)
+
+
 
   const navigation = useNavigation();
 
@@ -128,12 +134,29 @@ const PreferenceScreen = ({uni, userName}) => {
                     <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>
                     Choose your year </Text>
 
-                    {(subject != "")   && <RNPickerSelect
-                        placeholder={yearPlaceholder}
-                        items={year_picker_list}
-                        onValueChange={(value) => setYear(value)}
-                        value={year}
-                    />}
+                    {(subject != "")   && <Dropdown
+                    style={[styles.dropdown, isYearFocus && {borderColor: 'blue'}]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={year_picker_list}
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isYearFocus ? 'Select Year' : '...'}
+                    searchPlaceholder="Search..."
+                    value={year}
+                    onFocus={() => setIsYearFocus(true)}
+                    onBlur={() => setIsYearFocus(false)}
+                    onChange={item => {
+                        setYear(item.value);
+                        // handleState(item.value);
+                        // setCountryName(item.label);
+                        setIsYearFocus(false);
+                         }}
+                    />
+                        }
                 </View>
 
                 <View>
@@ -149,7 +172,7 @@ const PreferenceScreen = ({uni, userName}) => {
                     width: 200,
                     backgroundColor: "#4A55A2",
                     padding: 15,
-                    marginTop: 50,
+                    marginTop: 0,
                     marginLeft: "auto",
                     marginRight: "auto",
                     borderRadius: 6,
@@ -168,11 +191,6 @@ const PreferenceScreen = ({uni, userName}) => {
                 </View>
             </KeyboardAvoidingView>
         </View>
-
-
-
-
-
   )
 }
 
