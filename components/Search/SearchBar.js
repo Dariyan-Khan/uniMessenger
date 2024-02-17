@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, SafeAreaView, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const SearchBarComponent = () => {
+const SearchBarComponent = ({parentIsExpanded}) => {
   const [searchQuery, setSearchQuery] = useState(''); 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchSection}>
-        <Ionicons style={styles.searchIcon} name="ios-search" size={20} color="#000"/>
+
+      <Ionicons 
+  style={styles.searchIcon} 
+  name="arrow-back" 
+  size={20} 
+  color="#000"
+  onPress={() => parentIsExpanded(false)}
+/>
+
         <TextInput
           style={styles.searchInput}
           placeholder="Search..."

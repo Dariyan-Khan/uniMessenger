@@ -11,7 +11,7 @@ import ChatMessagesScreen from "./screens/ChatMessagesScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import PreferenceScreen from "./screens/PreferenceScreen";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import GeneralChatPost from "./components/GeneralChatPost";
+import GeneralChatPost from "./components/General_Chat/GeneralChatPost";
 
 
 

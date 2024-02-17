@@ -32,9 +32,16 @@ const GeneralChat = () => {
   const auth = FIREBASE_AUTH;
   const [isLoading, setIsLoading] = useState(true);
   const [chats, setChats] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
   
 
+
   const navigation = useNavigation();
+
+  const handleSearch = () => {
+    setIsExpanded(true);
+  };
 
   
 
@@ -63,20 +70,18 @@ const GeneralChat = () => {
     <View style={styles.container}>
 
       <View style={{padding:8}}>
-        <SearchBarComponent />
+      {/* <SearchBarComponent /> */}
       </View>
       {/* <Text style={styles.messagesTitle}>
                 Messages
               </Text> */}
 
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("GeneralChatPost")}
-        style={{ padding: 4 }}
-      >
-        <Ionicons name="add" size={28} color="#555" />
-      </TouchableOpacity>
-    </View>
+<View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
+  <SearchBarComponent />
+  <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost")}>
+    <Ionicons name="add" size={28} color="#555" />
+  </TouchableOpacity>
+</View>
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.messagesContainer}>
