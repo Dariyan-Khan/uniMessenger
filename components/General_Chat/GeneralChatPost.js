@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Button, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FirebaseConfig";
 import {
@@ -12,7 +13,9 @@ import {
     serverTimestamp,
   } from "firebase/firestore";
 
-const GeneralChatPost = ({ navigation }) => {
+const GeneralChatPost = ({ route }) => {
+    const { uni, userName } = route.params;
+    const navigation = useNavigation();
     const [message, setMessage] = useState('');
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [title, setTitle] = useState('');
@@ -29,8 +32,10 @@ const GeneralChatPost = ({ navigation }) => {
         name: title,
         timeStamp: timeStamp,
         message: message,
-        user: user.uid,
+        userid: user.uid,
+        userName: userName,
         anonymous: isAnonymous
+
         };
 
         setMessage("");

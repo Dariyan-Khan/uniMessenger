@@ -31,6 +31,7 @@ const HomeScreen = ({route}) => {
   const [chats, setChats] = useState(null);
   const [parentTab, setParentTab] = useState('YourChats');
   const navigation = useNavigation();
+  
 
   const handleTabFromChild = (data) => {
     setParentTab(data);
@@ -81,7 +82,7 @@ const HomeScreen = ({route}) => {
 
       <View style={{}}>
         {parentTab === 'YourChats' ? <YourChats/> :
-        parentTab === 'GeneralChat' ? <GeneralChat/> :
+        parentTab === 'GeneralChat' ? <GeneralChat uni={uni} userName={userName}/> :
         <Text>Something went wrong</Text>}
        </View>
 

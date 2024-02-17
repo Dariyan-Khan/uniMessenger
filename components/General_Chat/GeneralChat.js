@@ -27,13 +27,13 @@ import SearchBarComponent from "../Search/SearchUsers";
 
 
 
-const GeneralChat = () => {
-  //const { uni, userName } = route.params;
+const GeneralChat = ({uni, userName}) => {
   const auth = FIREBASE_AUTH;
   const [isLoading, setIsLoading] = useState(true);
   const [chats, setChats] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
-
+  console.log("userName",  userName)
+  console.log("uni",  uni)
   
 
 
@@ -48,7 +48,7 @@ const GeneralChat = () => {
 
   useLayoutEffect(() => {
     const chatQuery = query(
-      collection(FIRESTORE_DB, "universities", "Imperial College London", "General"),
+      collection(FIRESTORE_DB, "universities", uni.trim(), "General"),
       orderBy("_id", "desc") // Desc stands for descending
     );
 
@@ -78,7 +78,7 @@ const GeneralChat = () => {
 
 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
   <SearchBarComponent />
-  <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost")}>
+  <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost",  {uni: uni, userName: userName})}>
     <Ionicons name="add" size={28} color="#555" />
   </TouchableOpacity>
 </View>
