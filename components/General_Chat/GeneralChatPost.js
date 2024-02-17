@@ -40,7 +40,7 @@ const GeneralChatPost = ({ route }) => {
 
         setMessage("");
         await addDoc(
-            collection(FIRESTORE_DB, "universities", "Imperial College London", "General"),
+            collection(FIRESTORE_DB, "universities", uni, "General"),
                 _doc
             )
         .then(() => {

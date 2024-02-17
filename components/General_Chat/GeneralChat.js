@@ -33,7 +33,6 @@ const GeneralChat = ({uni, userName}) => {
   const [chats, setChats] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   console.log("userName",  userName)
-  console.log("uni",  uni)
   
 
 
