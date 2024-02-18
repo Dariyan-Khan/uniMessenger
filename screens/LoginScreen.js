@@ -10,7 +10,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 const LoginScreen = () => {
     
     useEffect(() => {
-        navigation.replace("WelcomeNavigator", {uni: "Imperial College London ", userName: "Dariyan"});
+        navigation.replace("WelcomeNavigator", {uni: "Imperial College London", userName: "Dariyan"});
     }, []);
 
 

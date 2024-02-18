@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  FlatList
 } from "react-native";
 import React, { useLayoutEffect, useState, useContext, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
@@ -32,9 +33,6 @@ const GeneralChat = ({uni, userName}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [chats, setChats] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
-  console.log("userName",  userName)
-  
-
 
   const navigation = useNavigation();
 
@@ -42,12 +40,16 @@ const GeneralChat = ({uni, userName}) => {
     setIsExpanded(true);
   };
 
+  useEffect(() => {
+    console.log("Updated num chats", chats?.length);
+  }, [chats]);
+
   
 
 
   useLayoutEffect(() => {
     const chatQuery = query(
-      collection(FIRESTORE_DB, "universities", uni.trim(), "General"),
+      collection(FIRESTORE_DB, "universities", uni, "General"),
       orderBy("_id", "desc") // Desc stands for descending
     );
 
@@ -57,6 +59,9 @@ const GeneralChat = ({uni, userName}) => {
       const chatRooms = querySnapShot.docs.map((doc) => doc.data());
       setChats(chatRooms);
       console.log("chatRooms", chatRooms);
+      console.log("num chats", chats?.length);
+      
+
       setIsLoading(false);
     });
 
@@ -75,14 +80,22 @@ const GeneralChat = ({uni, userName}) => {
                 Messages
               </Text> */}
 
-<View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
-  <SearchBarComponent />
-  <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost",  {uni: uni, userName: userName})}>
-    <Ionicons name="add" size={28} color="#555" />
-  </TouchableOpacity>
-</View>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
+      <SearchBarComponent />
+      <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost",  {uni: uni, userName: userName})}>
+        <Ionicons name="add" size={28} color="#555" />
+      </TouchableOpacity>
+    </View>
 
-        <ScrollView style={styles.scrollView}>
+          <FlatList
+            data={chats}
+            renderItem={(item) => <ChatCard key={item._id} room={item}/>}
+            keyExtractor={item => item._id}
+            contentContainerStyle={styles.listContentContainer}
+          />
+
+
+        {/* <ScrollView style={styles.scrollView}>
           <View style={styles.messagesContainer}>
             <View style={styles.messagesHeader}>
               
@@ -110,7 +123,7 @@ const GeneralChat = ({uni, userName}) => {
                 </>
               )}
           </View>
-        </ScrollView>
+        </ScrollView> */}
     </View>
   );
 };
@@ -118,11 +131,12 @@ const GeneralChat = ({uni, userName}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    flex: 0,
-    height:"100%" // Consider setting a background color for consistency // This ensures your view fills the available space
+    height:"100%", // Consider setting a background color for consistency // This ensures your view fills the available space
+    flexDirection: 'column', // Default is column, so this is not necessary
   },
   scrollView: {
-    flex: 0, // This ensures your ScrollView takes up the available space
+    flex: 1, // This ensures your ScrollView takes up the available space
+    flexGrow: 1
   },
   messagesContainer: {
     flex: 0, // Use flex to ensure it expands as needed

@@ -17,7 +17,7 @@ const ChatCard = ({ room }) => {
             {/* content */}
             <View style={styles.contentContainer}>
                 <Text style={styles.roomName}>
-                    {room.name}{room?.userName}
+                    {room.name} | {room.anonymous ? "Anonymous" : room?.userName}
                 </Text>
                 <Text style={styles.roomText}>
                     Lorem ipsum dolor sit amet consec tetur adipis adip isicing icing
