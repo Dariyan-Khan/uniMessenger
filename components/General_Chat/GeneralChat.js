@@ -87,15 +87,15 @@ const GeneralChat = ({uni, userName}) => {
       </TouchableOpacity>
     </View>
 
-          <FlatList
+          {/* <FlatList
             data={chats}
             renderItem={(item) => <ChatCard key={item._id} room={item}/>}
             keyExtractor={item => item._id}
             contentContainerStyle={styles.listContentContainer}
-          />
+          /> */}
 
 
-        {/* <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}>
           <View style={styles.messagesContainer}>
             <View style={styles.messagesHeader}>
               
@@ -123,7 +123,7 @@ const GeneralChat = ({uni, userName}) => {
                 </>
               )}
           </View>
-        </ScrollView> */}
+        </ScrollView>
     </View>
   );
 };
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height:"100%", // Consider setting a background color for consistency // This ensures your view fills the available space
     flexDirection: 'column', // Default is column, so this is not necessary
+    minHeight: "100%",
   },
   scrollView: {
     flex: 1, // This ensures your ScrollView takes up the available space
