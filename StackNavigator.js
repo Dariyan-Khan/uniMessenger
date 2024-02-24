@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import HomeScreen from "./screens/HomeScreen";
 import FriendsScreen from "./screens/FriendsScreen";
 import ChatsScreen from "./screens/ChatsScreen";
 import ChatMessagesScreen from "./screens/ChatMessagesScreen";
@@ -12,10 +11,12 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import PreferenceScreen from "./screens/PreferenceScreen";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import GeneralChatPost from "./components/General_Chat/GeneralChatPost";
+import { faker } from '@faker-js/faker';
 
 import YourChats from './components/YourChats';
 import GeneralChat from './components/General_Chat/GeneralChat';
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import ProfilePage from "./screens/ProfilePage";
 
 
 
@@ -64,7 +65,7 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen name="HomeScreen" component={Home2} options={{ headerShown: true }}/>
+        <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: true }}/>
 
         <Stack.Screen name="Friends" component={FriendsScreen} />
 
@@ -83,7 +84,7 @@ const StackNavigator = () => {
   );
 };
 
-function Home2({route}) {
+function Home({route}) {
   const Tab = createMaterialTopTabNavigator(); 
   const {uni, userName} = route.params;
   console.log("uni stack navigator", uni);
@@ -101,7 +102,12 @@ function Home2({route}) {
           } else if (route.name === 'GeneralChat') {
             iconName = focused ? 'globe' : 'globe-outline';
             return <Text style={{color: 'black'}}>General Chat</Text>;
+          } else if (route.name === 'ProfilePage') {
+            iconName = focused ? 'globe' : 'globe-outline';
+            return <Text style={{color: 'black'}}>Profile</Text>;
           }
+
+
         },
         tabBarLabelStyle: {
           color: 'white',
@@ -114,10 +120,6 @@ function Home2({route}) {
       })}
       initialRouteName="YourChats"
     >
-      {/* <Tab.Screen name="YourChats" component={YourChats} />
-
-      
-      <Tab.Screen name="GeneralChat" component={GeneralChat} />  */}
 
         <Tab.Screen name="YourChats">
           {() => <YourChats uni={uni} userName={userName} />}
@@ -127,6 +129,11 @@ function Home2({route}) {
         <Tab.Screen name="GeneralChat">
           {() => <GeneralChat uni={uni} userName={userName} />}
         </Tab.Screen>
+
+        <Tab.Screen name="ProfilePage">
+          {() => <ProfilePage />}
+        </Tab.Screen>
+
     </Tab.Navigator>
   );
 }

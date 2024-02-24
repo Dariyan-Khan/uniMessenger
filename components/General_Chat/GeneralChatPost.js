@@ -39,6 +39,7 @@ const GeneralChatPost = ({ route }) => {
         };
 
         setMessage("");
+        setTitle("");
         await addDoc(
             collection(FIRESTORE_DB, "universities", uni, "General"),
                 _doc

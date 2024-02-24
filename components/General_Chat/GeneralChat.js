@@ -78,6 +78,12 @@ const GeneralChat = ({uni, userName}) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
+      <SearchBarComponent />
+      <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost", {uni: uni, userName: userName})}>
+        <Ionicons name="add" size={28} color="#555" />
+      </TouchableOpacity>
+    </View>
 
         <ScrollView style={styles.scrollView}>
             {isLoading ? (
