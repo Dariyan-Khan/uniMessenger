@@ -59,7 +59,7 @@ const HomeScreen = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
+      <SafeAreaView style={{flex:1}}>
 
       <View style={styles.header}>
         <View>
@@ -77,10 +77,10 @@ const HomeScreen = ({route}) => {
           </TouchableOpacity>
         </View>
       
-        <ChatToggle setParentTab={handleTabFromChild}/>
+        {/* <ChatToggle setParentTab={handleTabFromChild}/> */}
       
 
-      <View style={{}}>
+      <View style={styles.scrollView}>
         {parentTab === 'YourChats' ? <YourChats/> :
         parentTab === 'GeneralChat' ? <GeneralChat uni={uni} userName={userName}/> :
         <Text>Something went wrong</Text>}
@@ -90,6 +90,8 @@ const HomeScreen = ({route}) => {
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {

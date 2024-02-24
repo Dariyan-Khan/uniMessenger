@@ -44,64 +44,44 @@ const GeneralChat = ({uni, userName}) => {
     console.log("Updated num chats", chats?.length);
   }, [chats]);
 
+  console.log("uni", uni);
+  console.log("userName", userName);
+
   
 
 
-  useLayoutEffect(() => {
-    const chatQuery = query(
-      collection(FIRESTORE_DB, "universities", uni, "General"),
-      orderBy("_id", "desc") // Desc stands for descending
-    );
+  // useLayoutEffect(() => {
+  //   const chatQuery = query(
+  //     collection(FIRESTORE_DB, "universities", uni, "General"),
+  //     orderBy("_id", "desc") // Desc stands for descending
+  //   );
 
-    console.log("chatQuery", chatQuery);
+  //   console.log("chatQuery", chatQuery);
 
-    const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
-      const chatRooms = querySnapShot.docs.map((doc) => doc.data());
-      setChats(chatRooms);
-      console.log("chatRooms", chatRooms);
-      console.log("num chats", chats?.length);
+  //   const unsubscribe = onSnapshot(chatQuery, (querySnapShot) => {
+  //     const chatRooms = querySnapShot.docs.map((doc) => doc.data());
+  //     setChats(chatRooms);
+  //     console.log("chatRooms", chatRooms);
+  //     console.log('uni', uni);
+  //     console.log("num chats", chats?.length);
       
 
-      setIsLoading(false);
-    });
+      
 
-    //  Return the unsubscribe funciton to stop listening to the updates
-    return unsubscribe;
-  }, []);
+  //     setIsLoading(false);
+  //   });
+
+  //   //  Return the unsubscribe funciton to stop listening to the updates
+  //   return unsubscribe;
+  // }, []);
 
 
   return (
+    <SafeAreaView style={{ flex: 0 }}>
     <View style={styles.container}>
+      <Text>"Hiii"</Text> 
 
-      <View style={{padding:8}}>
-      {/* <SearchBarComponent /> */}
-      </View>
-      {/* <Text style={styles.messagesTitle}>
-                Messages
-              </Text> */}
-
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
-      <SearchBarComponent />
-      <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost",  {uni: uni, userName: userName})}>
-        <Ionicons name="add" size={28} color="#555" />
-      </TouchableOpacity>
-    </View>
-
-          {/* <FlatList
-            data={chats}
-            renderItem={(item) => <ChatCard key={item._id} room={item}/>}
-            keyExtractor={item => item._id}
-            contentContainerStyle={styles.listContentContainer}
-          /> */}
-
-
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.messagesContainer}>
-            <View style={styles.messagesHeader}>
-              
-  
-              
-            </View>
+        {/* <ScrollView style={styles.scrollView}>
             {isLoading ? (
                 <>
                   <View className="w-full flex items-center justify-center">
@@ -122,9 +102,9 @@ const GeneralChat = ({uni, userName}) => {
                   )}
                 </>
               )}
-          </View>
-        </ScrollView>
+        </ScrollView> */}
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -133,35 +113,41 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height:"100%", // Consider setting a background color for consistency // This ensures your view fills the available space
     flexDirection: 'column', // Default is column, so this is not necessary
-    minHeight: "100%",
+    minHeight: "50%",
   },
   scrollView: {
-    flex: 1, // This ensures your ScrollView takes up the available space
-    flexGrow: 1
+    flex: 0, // This ensures your ScrollView takes up the available space
+    flexGrow: 0.85
   },
-  messagesContainer: {
-    flex: 0, // Use flex to ensure it expands as needed
-    paddingHorizontal: 10, // Add some horizontal padding for better spacing
-  },
-  messagesHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10, // Uniform padding for the header
-    //borderBottomWidth: 1, // Adds a subtle line to separate the header
-    //borderBottomColor: '#ddd', // Light color for the separator line
-  },
-  messagesTitle: {
-    color: 'black',
-    fontSize: 20, // Slightly larger for better visibility
-    fontWeight: 'bold',
-  },
-  loadingContainer: {
-    flex: 0, // Ensure it takes up the full container height
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // Other styles remain unchanged
+
+
+
+
+
+
+  // messagesContainer: {
+  //   flex: 0, // Use flex to ensure it expands as needed
+  //   paddingHorizontal: 10, // Add some horizontal padding for better spacing
+  // },
+  // messagesHeader: {
+  //   flexDirection: 'row',
+  //   // alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   padding: 10, // Uniform padding for the header
+  //   //borderBottomWidth: 1, // Adds a subtle line to separate the header
+  //   //borderBottomColor: '#ddd', // Light color for the separator line
+  // },
+  // messagesTitle: {
+  //   color: 'black',
+  //   fontSize: 20, // Slightly larger for better visibility
+  //   fontWeight: 'bold',
+  // },
+  // loadingContainer: {
+  //   flex: 0, // Ensure it takes up the full container height
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // // Other styles remain unchanged
 });
 
 
