@@ -13,6 +13,11 @@ import PreferenceScreen from "./screens/PreferenceScreen";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import GeneralChatPost from "./components/General_Chat/GeneralChatPost";
 
+import YourChats from './components/YourChats';
+import GeneralChat from './components/General_Chat/GeneralChat';
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+
+
 
 
 
@@ -59,7 +64,7 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="HomeScreen" component={Home2} options={{ headerShown: true }}/>
 
         <Stack.Screen name="Friends" component={FriendsScreen} />
 
@@ -77,6 +82,54 @@ const StackNavigator = () => {
     </NavigationContainer>
   );
 };
+
+function Home2({route}) {
+  const Tab = createMaterialTopTabNavigator(); 
+  const {uni, userName} = route.params;
+  console.log("uni stack navigator", uni);
+  console.log("userName stack navigator", userName);
+
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarLabel: ({ focused }) => {
+          let iconName;
+          if (route.name === 'YourChats') {
+            // iconName = focused ? 'chatbox' : 'chatbox-outline';
+            // return <Ionicons name={iconName} size={20} color={'white'} />;
+            return <Text style={{color: 'black'}}>Your Chats</Text>;
+          } else if (route.name === 'GeneralChat') {
+            iconName = focused ? 'globe' : 'globe-outline';
+            return <Text style={{color: 'black'}}>General Chat</Text>;
+          }
+        },
+        tabBarLabelStyle: {
+          color: 'white',
+        },
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'gray', // Assuming you have a gray color in your theme
+        tabBarStyle: {
+          backgroundColor: 'white',
+        },
+      })}
+      initialRouteName="YourChats"
+    >
+      {/* <Tab.Screen name="YourChats" component={YourChats} />
+
+      
+      <Tab.Screen name="GeneralChat" component={GeneralChat} />  */}
+
+        <Tab.Screen name="YourChats">
+          {() => <YourChats uni={uni} userName={userName} />}
+        </Tab.Screen>
+
+
+        <Tab.Screen name="GeneralChat">
+          {() => <GeneralChat uni={uni} userName={userName} />}
+        </Tab.Screen>
+    </Tab.Navigator>
+  );
+}
 
 export default StackNavigator;
 

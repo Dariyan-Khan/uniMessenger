@@ -44,6 +44,9 @@ const GeneralChat = ({uni, userName}) => {
     console.log("Updated num chats", chats?.length);
   }, [chats]);
 
+  console.log("uni", uni);
+  console.log("userName", userName);
+
   
 
 
@@ -59,7 +62,10 @@ const GeneralChat = ({uni, userName}) => {
       const chatRooms = querySnapShot.docs.map((doc) => doc.data());
       setChats(chatRooms);
       console.log("chatRooms", chatRooms);
+      console.log('uni', uni);
       console.log("num chats", chats?.length);
+      
+
       
 
       setIsLoading(false);
@@ -73,35 +79,7 @@ const GeneralChat = ({uni, userName}) => {
   return (
     <View style={styles.container}>
 
-      <View style={{padding:8}}>
-      {/* <SearchBarComponent /> */}
-      </View>
-      {/* <Text style={styles.messagesTitle}>
-                Messages
-              </Text> */}
-
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
-      <SearchBarComponent />
-      <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost",  {uni: uni, userName: userName})}>
-        <Ionicons name="add" size={28} color="#555" />
-      </TouchableOpacity>
-    </View>
-
-          {/* <FlatList
-            data={chats}
-            renderItem={(item) => <ChatCard key={item._id} room={item}/>}
-            keyExtractor={item => item._id}
-            contentContainerStyle={styles.listContentContainer}
-          /> */}
-
-
         <ScrollView style={styles.scrollView}>
-          <View style={styles.messagesContainer}>
-            <View style={styles.messagesHeader}>
-              
-  
-              
-            </View>
             {isLoading ? (
                 <>
                   <View className="w-full flex items-center justify-center">
@@ -122,7 +100,6 @@ const GeneralChat = ({uni, userName}) => {
                   )}
                 </>
               )}
-          </View>
         </ScrollView>
     </View>
   );
@@ -133,35 +110,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height:"100%", // Consider setting a background color for consistency // This ensures your view fills the available space
     flexDirection: 'column', // Default is column, so this is not necessary
-    minHeight: "100%",
   },
   scrollView: {
     flex: 1, // This ensures your ScrollView takes up the available space
     flexGrow: 1
   },
-  messagesContainer: {
-    flex: 0, // Use flex to ensure it expands as needed
-    paddingHorizontal: 10, // Add some horizontal padding for better spacing
-  },
-  messagesHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10, // Uniform padding for the header
-    //borderBottomWidth: 1, // Adds a subtle line to separate the header
-    //borderBottomColor: '#ddd', // Light color for the separator line
-  },
-  messagesTitle: {
-    color: 'black',
-    fontSize: 20, // Slightly larger for better visibility
-    fontWeight: 'bold',
-  },
-  loadingContainer: {
-    flex: 0, // Ensure it takes up the full container height
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  // Other styles remain unchanged
+
+
+
+
+
+
+  // messagesContainer: {
+  //   flex: 0, // Use flex to ensure it expands as needed
+  //   paddingHorizontal: 10, // Add some horizontal padding for better spacing
+  // },
+  // messagesHeader: {
+  //   flexDirection: 'row',
+  //   // alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   padding: 10, // Uniform padding for the header
+  //   //borderBottomWidth: 1, // Adds a subtle line to separate the header
+  //   //borderBottomColor: '#ddd', // Light color for the separator line
+  // },
+  // messagesTitle: {
+  //   color: 'black',
+  //   fontSize: 20, // Slightly larger for better visibility
+  //   fontWeight: 'bold',
+  // },
+  // loadingContainer: {
+  //   flex: 0, // Ensure it takes up the full container height
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // // Other styles remain unchanged
 });
 
 
