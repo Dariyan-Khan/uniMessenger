@@ -97,7 +97,7 @@ const GeneralChat = ({uni, userName}) => {
                   {chats && chats?.length > 0 ? (
                     <>
                       {chats?.map((room) => (
-                        <ChatCard key={room._id} room={room}/>
+                        <ChatCard key={room._id} room={room} uni={uni} userName={userName}/>
                         //<Text>room.uid</Text>
                       ))}
                     </>

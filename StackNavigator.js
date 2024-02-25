@@ -17,6 +17,7 @@ import YourChats from './components/YourChats';
 import GeneralChat from './components/General_Chat/GeneralChat';
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import ProfilePage from "./screens/ProfilePage";
+import ViewGeneralPost from "./screens/ViewGeneralPost";
 
 
 
@@ -76,6 +77,8 @@ const StackNavigator = () => {
         <Stack.Screen name="WelcomeNavigator" component={SwipeNavigator} options={{ headerShown: false }}/>
 
         <Stack.Screen name="GeneralChatPost" component={GeneralChatPost} />
+
+        <Stack.Screen name="ViewGeneralPost" component={ViewGeneralPost} />
 
         {/* <Stack.Screen name="ChatsNavigator" component={ChatsNavigator} options={{ headerShown: false }}/> */}
 

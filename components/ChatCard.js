@@ -2,12 +2,19 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import ViewGeneralPost from '../screens/ViewGeneralPost';
 
-const ChatCard = ({ room }) => {
+const ChatCard = ({ room, uni, userName }) => {
     const navigation = useNavigation();
+    console.log("room ChatCard", room)
+    console.log("user ChatCard", userName)
+    console.log("uni ChatCard", uni)
+    
     return (
         <TouchableOpacity
-            onPress={() => navigation.navigate("ChatScreen", { room: room })}
+            onPress={() => navigation.navigate("ViewGeneralPost", { room: room, 
+                                                                    uni: uni, 
+                                                                    userName: userName})}
             style={styles.cardContainer}
         >
             {/* images */}
@@ -20,8 +27,9 @@ const ChatCard = ({ room }) => {
                     {room.name} | {room.anonymous ? "Anonymous" : room?.userName}
                 </Text>
                 <Text style={styles.roomText}>
-                    Lorem ipsum dolor sit amet consec tetur adipis adip isicing icing
-                    elit....
+                    {room?.message?.length > 50
+                        ? room?.message?.substring(0, 50) + "..."
+                        : room?.message}
                 </Text>
             </View>
             {/* time text */}
