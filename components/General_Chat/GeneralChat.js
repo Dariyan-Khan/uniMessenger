@@ -24,7 +24,7 @@ import {
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FirebaseConfig";
 import { faker } from '@faker-js/faker';
 import ChatCard from "../ChatCard";
-import SearchBarComponent from "../Search/SearchUsers";
+import GeneralSearchComponent from "../Search/GeneralSearch";
 
 
 
@@ -79,7 +79,7 @@ const GeneralChat = ({uni, userName}) => {
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 4 }}>
-      <SearchBarComponent />
+      <GeneralSearchComponent />
       <TouchableOpacity onPress={() => navigation.navigate("GeneralChatPost", {uni: uni, userName: userName})}>
         <Ionicons name="add" size={28} color="#555" />
       </TouchableOpacity>

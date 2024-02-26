@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchBarComponent from './SearchBar';
 
 
-const SearchComponent = () => {
+const GeneralSearchComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const animationValue = new Animated.Value(0);
   const screenWidth = Dimensions.get('window').width;
@@ -73,5 +73,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchComponent;
+export default GeneralSearchComponent;
 
