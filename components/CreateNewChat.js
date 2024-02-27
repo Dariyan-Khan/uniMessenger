@@ -15,6 +15,7 @@ import {
   } from "firebase/firestore";
 
 import { faker } from '@faker-js/faker';
+import { FontAwesome5 } from "@expo/vector-icons";
 
 
 
@@ -92,7 +93,7 @@ const SearchScreen = () => {
           <TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
             {/* <Image source={{ uri: item.profileImage }} style={styles.image} /> */}
             <Image source={{ uri: faker.image.avatar() }} style={styles.image} />
-            <Text style={styles.name}>{item.userName}</Text>
+            <PeopleCard userData={item}/>
           </TouchableOpacity>
         )}
       />
@@ -194,3 +195,70 @@ const styles = StyleSheet.create({
 });
 
 export default SearchScreen;
+
+
+const PeopleCard = ({userData}) => {
+    
+    return (
+        <TouchableOpacity
+            onPress={() => console.log("Person pressed")}
+            style={people_styles.cardContainer}
+        >
+            {/* images */}
+            <View style={people_styles.imageContainer}>
+                <FontAwesome5 name="users" size={24} color="#555" />
+            </View>
+
+            <View style={people_styles.contentContainer}>
+                <Text style={styles.roomName}>
+                    {userData.userName}
+                </Text>
+                
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+const people_styles = StyleSheet.create({
+    cardContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingVertical: 2,
+        padding: 4,
+        width: '100%',
+    },
+    imageContainer: {
+        width: 32,
+        height: 32,
+        borderRadius: 32,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderColor: 'blue', // Replace 'blue' with your primary color
+        padding: 1,
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        marginLeft: 4,
+    },
+    roomName: {
+        color: '#333', // Replace with your specific color
+        fontSize: 16,
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+    },
+    roomText: {
+        color: 'black', // Replace with your primaryText color
+        fontSize: 14,
+    },
+    timeText: {
+        color: 'blue', // Replace 'blue' with your primary color
+        paddingHorizontal: 4,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    // Add more styles as needed
+});
