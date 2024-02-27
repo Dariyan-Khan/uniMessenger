@@ -63,9 +63,29 @@ const SearchScreen = () => {
     return users;
     }
 
-  const onItemPress = (item) => {
-    console.log('Item pressed:', item);
-  }
+
+
+  const PeopleCard = ({userData}) => {
+    
+    return (
+        <TouchableOpacity
+            onPress={() => console.log("Person pressed")}
+            style={people_styles.cardContainer}
+        >
+            {/* images */}
+            <View style={people_styles.imageContainer}>
+                <FontAwesome5 name="users" size={24} color="#555" />
+            </View>
+
+            <View style={people_styles.contentContainer}>
+                <Text style={people_styles.roomName}>
+                    {userData.userName}
+                </Text>
+                
+            </View>
+        </TouchableOpacity>
+    );
+  };
 
 
   return (
@@ -90,11 +110,7 @@ const SearchScreen = () => {
         data={searchResults}
         keyExtractor={item => item._id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
-            {/* <Image source={{ uri: item.profileImage }} style={styles.image} /> */}
-            <Image source={{ uri: faker.image.avatar() }} style={styles.image} />
             <PeopleCard userData={item}/>
-          </TouchableOpacity>
         )}
       />
 
@@ -196,28 +212,6 @@ const styles = StyleSheet.create({
 
 export default SearchScreen;
 
-
-const PeopleCard = ({userData}) => {
-    
-    return (
-        <TouchableOpacity
-            onPress={() => console.log("Person pressed")}
-            style={people_styles.cardContainer}
-        >
-            {/* images */}
-            <View style={people_styles.imageContainer}>
-                <FontAwesome5 name="users" size={24} color="#555" />
-            </View>
-
-            <View style={people_styles.contentContainer}>
-                <Text style={styles.roomName}>
-                    {userData.userName}
-                </Text>
-                
-            </View>
-        </TouchableOpacity>
-    );
-};
 
 const people_styles = StyleSheet.create({
     cardContainer: {
