@@ -64,9 +64,7 @@ const GeneralChat = ({uni, userName}) => {
       console.log("chatRooms", chatRooms);
       console.log('uni', uni);
       console.log("num chats", chats?.length);
-      
-
-      
+    
 
       setIsLoading(false);
     });

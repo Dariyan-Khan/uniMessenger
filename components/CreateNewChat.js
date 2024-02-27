@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity, Image } from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
-
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../FirebaseConfig";
 import {
     addDoc,
@@ -14,6 +13,10 @@ import {
     where,
     getDocs,
   } from "firebase/firestore";
+
+import { faker } from '@faker-js/faker';
+
+
 
 
 const SearchScreen = () => {
@@ -59,9 +62,13 @@ const SearchScreen = () => {
     return users;
     }
 
+  const onItemPress = (item) => {
+    console.log('Item pressed:', item);
+  }
+
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View contentContainerStyle={styles.container}>
       <TextInput
         placeholder="Type in a title..."
         value={title}
@@ -77,19 +84,18 @@ const SearchScreen = () => {
         style={styles.input}
       />
         <Text>Search results below:</Text>
-        <Text>{searchResults.map(user => user.userName)}</Text>
 
-
-
-
-
-
-
-
-
-
-
-
+      <FlatList
+        data={searchResults}
+        keyExtractor={item => item._id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
+            {/* <Image source={{ uri: item.profileImage }} style={styles.image} /> */}
+            <Image source={{ uri: faker.image.avatar() }} style={styles.image} />
+            <Text style={styles.name}>{item.userName}</Text>
+          </TouchableOpacity>
+        )}
+      />
 
 
 
@@ -151,7 +157,7 @@ const SearchScreen = () => {
             onChangeText={setMessage}
           />
       <Button title="Create" onPress={() => console.log('Create button pressed')} /> */}
-    </ScrollView>
+    </View>
   );
 };
 
