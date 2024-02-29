@@ -29,6 +29,8 @@ const SearchScreen = () => {
   const [message, setMessage] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -44,6 +46,21 @@ const SearchScreen = () => {
   }, [searchQuery, subjectStudying, yearOfStudy]); // Add other dependencies as needed
 
 
+
+  const toggleItemSelection = (item) => {
+    console.log(selectedItems.length, "selectedItems length")
+    console.log(item, "item")
+    const index = selectedItems.findIndex(selectedItem => selectedItem._id === item._id);
+    console.log(index, "index")
+  
+    if (index > -1) {
+      // If the item is already selected, remove it from the list
+      setSelectedItems(currentItems => currentItems.filter((_, idx) => idx !== index));
+    } else {
+      // If the item is not selected, add it to the list
+      setSelectedItems(currentItems => [...currentItems, item]);
+    }
+  };
 
 
   // Function to get users by username search query
@@ -67,9 +84,10 @@ const SearchScreen = () => {
 
   const PeopleCard = ({userData}) => {
     
+    
     return (
         <TouchableOpacity
-            onPress={() => console.log("Person pressed")}
+            onPress={() => toggleItemSelection(userData)}
             style={people_styles.cardContainer}
         >
             {/* images */}
@@ -90,13 +108,12 @@ const SearchScreen = () => {
 
   return (
     <View contentContainerStyle={styles.container}>
-      <TextInput
+      {/* <TextInput
         placeholder="Type in a title..."
         value={title}
         onChangeText={setTitle}
         style={styles.input}
-      />
-
+      /> */}
 
       <TextInput
         placeholder="Search people..."
@@ -104,6 +121,33 @@ const SearchScreen = () => {
         onChangeText={setSearchQuery}
         style={styles.input}
       />
+
+      {/* <View style={styles.selectedItemsContainer}>
+        {selectedItems.map((item) => (
+          <View key={item._id} style={styles.selectedItem}>
+            <Text style={styles.selectedItemText}>{item.userName}</Text>
+            <TouchableOpacity onPress={() => toggleItemSelection(item)}>
+              <Text style={styles.removeItem}>X</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View> */}
+
+      <FlatList style={styles.selectedItemsContainer}
+      
+      data={selectedItems}
+      keyExtractor={item => item._id.toString()}
+      renderItem={({ item }) => (
+        <View key={item._id} style={styles.selectedItem}>
+        <Text style={styles.selectedItemText}>{item.userName}</Text>
+            <TouchableOpacity onPress={() => toggleItemSelection(item)}>
+              <Text style={styles.removeItem}>X</Text>
+            </TouchableOpacity>
+        </View>
+    )}
+      >
+      </FlatList>
+
         <Text>Search results below:</Text>
 
       <FlatList
@@ -114,11 +158,7 @@ const SearchScreen = () => {
         )}
       />
 
-
-
-
-
-
+      
 
 
         {/* <Dropdown
@@ -207,6 +247,27 @@ const styles = StyleSheet.create({
   advancedFilterText: {
     fontWeight: 'bold',
     marginBottom: 10, // Space between the toggle and the inputs
+  },
+
+  selectedItemsContainer: {
+    flexDirection: 'row', // Or 'column' for a vertical list
+    flexWrap: 'wrap',
+    padding: 10,
+  },
+  selectedItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e1e1e1',
+    borderRadius: 20,
+    padding: 8,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  selectedItemText: {
+    marginRight: 4,
+  },
+  removeItem: {
+    color: '#999',
   },
 });
 
