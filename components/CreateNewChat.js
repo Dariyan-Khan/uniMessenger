@@ -38,17 +38,18 @@ const SearchScreen = () => {
   const uni_json = require('../university_subjects.json')[uni.trim()]
   const uni_subjects = Object.keys(uni_json);
   let uni_subject_picker_list = []
-  let year_picker_list = []
+  // let year_picker_list = []
+
+  const all_years = [
+    {"label": "1st Year", "value": 1},
+    {"label": "2nd Year", "value": 2},
+    {"label": "3rd Year", "value": 3},
+    {"label": "4th Year", "value": 4}
+  ]
 
   for (el in uni_subjects) {
     uni_subject_picker_list.push({"label": uni_subjects[el], "value": uni_subjects[el]})
     }
-  
-    for (el in uni_json[subject]){
-      year_picker_list.push({"label": uni_json[subject][el], "value": uni_json[subject][el]})
-    }
-  
-
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -65,7 +66,7 @@ const SearchScreen = () => {
 
   // Function to get users by username search query
   async function performSearch() {
-    console.log("performSearch")
+    console.log(year, "year")
     let q = collection(FIRESTORE_DB, 'users');
 
     // const usersColRef = collection(FIRESTORE_DB, 'users');
@@ -85,9 +86,16 @@ const SearchScreen = () => {
     q = query(q, where('subject', '==', subject));
     }
   
-  if (year.trim() !== '') {
+    
+  
+  if (typeof year === 'string' && year.trim() !== '') {
     q = query(q, where('year', '==', year));
     }
+  
+  if (typeof year === 'number' && year !== '') {
+    console.log("hereeeee")
+      q = query(q, where('year', '==', year));
+      }
 
     const querySnapshot = await getDocs(q);
 
@@ -210,15 +218,29 @@ const SearchScreen = () => {
                         setIsSubjectFocus(false);
                          }}
                     />
-
-
-            <TextInput
-              placeholder="Year of Study"
-              value={year}
-              keyboardType="numeric"
-              onChangeText={setYear}
-              style={styles.input}
-            />
+            
+            <Dropdown
+                    style={[styles.dropdown, isYearFocus && {borderColor: 'blue'}]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={all_years}
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isYearFocus ? 'Select Year' : '...'}
+                    searchPlaceholder="Search..."
+                    value={year}
+                    onFocus={() => setIsYearFocus(true)}
+                    onBlur={() => setIsYearFocus(false)}
+                    onChange={item => {
+                        setYear(item.value);
+                        // handleState(item.value);
+                        // setCountryName(item.label);
+                        setIsYearFocus(false);
+                         }}
+                    />
           </View>
         )}
       </View>
