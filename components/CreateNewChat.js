@@ -21,20 +21,38 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 
 const SearchScreen = () => {
+  const uni="Imperial College London"
   const [title, setTitle] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [subjectStudying, setSubjectStudying] = useState('');
-  const [yearOfStudy, setYearOfStudy] = useState('');
   const [message, setMessage] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
+  const [subject, setSubject] = useState("");
+  const [isSubjectFocus, setIsSubjectFocus] = useState(false);
+  const [year, setYear] = useState("");
+  const [isYearFocus, setIsYearFocus] = useState(false);
+
+  const uni_json = require('../university_subjects.json')[uni.trim()]
+  const uni_subjects = Object.keys(uni_json);
+  let uni_subject_picker_list = []
+  let year_picker_list = []
+
+  for (el in uni_subjects) {
+    uni_subject_picker_list.push({"label": uni_subjects[el], "value": uni_subjects[el]})
+    }
+  
+    for (el in uni_json[subject]){
+      year_picker_list.push({"label": uni_json[subject][el], "value": uni_json[subject][el]})
+    }
+  
+
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      if (searchQuery) {
+      if (searchQuery || subject || year) {
         console.log("Searching for:", searchQuery)
         performSearch();
       } else {
@@ -43,8 +61,45 @@ const SearchScreen = () => {
     }, 500); // 500ms delay
 
     return () => clearTimeout(timerId);
-  }, [searchQuery, subjectStudying, yearOfStudy]); // Add other dependencies as needed
+  }, [searchQuery, subject, year]); // Add other dependencies as needed
 
+  // Function to get users by username search query
+  async function performSearch() {
+    console.log("performSearch")
+    let q = collection(FIRESTORE_DB, 'users');
+
+    // const usersColRef = collection(FIRESTORE_DB, 'users');
+
+    // const q = query(usersColRef, 
+    //           // where('userName', '>=', searchQuery),
+    //           //  where('userName', '<=', searchQuery + '\uf8ff'),
+    //            where('subject', '==', subject),
+    //           //  where('year', '==', yearOfStudy)
+    //            );
+
+    if (searchQuery.trim() !== '') {
+    q = query(q, where('userName', '>=', searchQuery), where('userName', '<=', searchQuery + '\uf8ff'));
+     }
+  
+  if (subject.trim() !== '') {
+    q = query(q, where('subject', '==', subject));
+    }
+  
+  if (year.trim() !== '') {
+    q = query(q, where('year', '==', year));
+    }
+
+    const querySnapshot = await getDocs(q);
+
+    const users = querySnapshot.docs.map(doc => ({
+        ...doc.data()
+      }));
+
+
+    console.log("users", users[0]);
+    setSearchResults(users);
+    return users;
+    }
 
 
   const toggleItemSelection = (item) => {
@@ -61,25 +116,6 @@ const SearchScreen = () => {
       setSelectedItems(currentItems => [...currentItems, item]);
     }
   };
-
-
-  // Function to get users by username search query
-    async function performSearch() {
-    const usersColRef = collection(FIRESTORE_DB, 'users');
-    const q = query(usersColRef, where('userName', '>=', searchQuery), where('userName', '<=', searchQuery + '\uf8ff'));
-
-    const querySnapshot = await getDocs(q);
-
-    const users = querySnapshot.docs.map(doc => ({
-        ...doc.data()
-      }));
-
-
-    console.log("users", users[0]);
-    setSearchResults(users);
-    return users;
-    }
-
 
 
   const PeopleCard = ({userData}) => {
@@ -122,33 +158,20 @@ const SearchScreen = () => {
         style={styles.input}
       />
 
-      {/* <View style={styles.selectedItemsContainer}>
-        {selectedItems.map((item) => (
-          <View key={item._id} style={styles.selectedItem}>
-            <Text style={styles.selectedItemText}>{item.userName}</Text>
-            <TouchableOpacity onPress={() => toggleItemSelection(item)}>
-              <Text style={styles.removeItem}>X</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View> */}
-
+      {/* Displays selected people */}
       <FlatList style={styles.selectedItemsContainer}
-      
-      data={selectedItems}
-      keyExtractor={item => item._id.toString()}
-      renderItem={({ item }) => (
-        <View key={item._id} style={styles.selectedItem}>
-        <Text style={styles.selectedItemText}>{item.userName}</Text>
-            <TouchableOpacity onPress={() => toggleItemSelection(item)}>
-              <Text style={styles.removeItem}>X</Text>
-            </TouchableOpacity>
-        </View>
-    )}
-      >
+        data={selectedItems}
+        keyExtractor={item => item._id.toString()}
+        renderItem={({ item }) => (
+          <View key={item._id} style={styles.selectedItem}>
+          <Text style={styles.selectedItemText}>{item.userName}</Text>
+              <TouchableOpacity onPress={() => toggleItemSelection(item)}>
+                <Text style={styles.removeItem}>X</Text>
+              </TouchableOpacity>
+          </View>
+        )}
+        >
       </FlatList>
-
-        <Text>Search results below:</Text>
 
       <FlatList
         data={searchResults}
@@ -158,48 +181,42 @@ const SearchScreen = () => {
         )}
       />
 
-      
 
-
-        {/* <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={require(uni_list_url)}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder={!isFocus ? 'Select University' : '...'}
-        searchPlaceholder="Search..."
-        value={selectedUni}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-            setUni(item.value);
-            // handleState(item.value);
-            // setCountryName(item.label);
-            setIsFocus(false);
-                }}
-        />
 
       <View style={styles.advancedSearchContainer}>
         <Text onPress={() => setShowAdvanced(!showAdvanced)} style={styles.advancedFilterText}>Advanced Filter</Text>
         {showAdvanced && (
           <View>
-            <TextInput
-              placeholder="Subject Studying"
-              value={subjectStudying}
-              onChangeText={setSubjectStudying}
-              style={styles.input}
-            />
+             <Dropdown
+                    style={[styles.dropdown, isSubjectFocus && {borderColor: 'blue'}]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={uni_subject_picker_list}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isSubjectFocus ? 'Select Subject' : '...'}
+                    searchPlaceholder="Search..."
+                    value={subject}
+                    onFocus={() => setIsSubjectFocus(true)}
+                    onBlur={() => setIsSubjectFocus(false)}
+                    onChange={item => {
+                      setSubject(item.value);
+                        // handleState(item.value);
+                        // setCountryName(item.label);
+                        setIsSubjectFocus(false);
+                         }}
+                    />
+
+
             <TextInput
               placeholder="Year of Study"
-              value={yearOfStudy}
+              value={year}
               keyboardType="numeric"
-              onChangeText={setYearOfStudy}
+              onChangeText={setYear}
               style={styles.input}
             />
           </View>
@@ -213,7 +230,7 @@ const SearchScreen = () => {
             value={message}
             onChangeText={setMessage}
           />
-      <Button title="Create" onPress={() => console.log('Create button pressed')} /> */}
+      <Button title="Create" onPress={() => console.log('Create button pressed')} />
     </View>
   );
 };
@@ -253,6 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Or 'column' for a vertical list
     flexWrap: 'wrap',
     padding: 10,
+    maxHeight: 100
   },
   selectedItem: {
     flexDirection: 'row',
@@ -269,6 +287,14 @@ const styles = StyleSheet.create({
   removeItem: {
     color: '#999',
   },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginTop: 10,
+  }
 });
 
 export default SearchScreen;
@@ -315,5 +341,6 @@ const people_styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+    
     // Add more styles as needed
 });
