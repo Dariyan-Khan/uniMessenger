@@ -282,12 +282,13 @@ const SearchScreen = () => {
 
 
       <TextInput
-            style={styles.message_input}
-            multiline
-            placeholder="Type your message here..."
-            value={message}
-            onChangeText={setMessage}
-          />
+        style={styles.message_input}
+        multiline
+        placeholder="Type your message here..."
+        value={message}
+        onChangeText={setMessage}
+        scrollEnabled={true} // Enable scrolling
+      />
       <Button title="Create" onPress={() => console.log('Create button pressed')} />
     </View>
   );
@@ -368,7 +369,15 @@ const styles = StyleSheet.create({
     flex: 1, // Make input boxes expand equally
     margin: 5, // Space between input boxes
   },
-
+  message_input: {
+    height: 100, // Adjust based on your line height and number of lines
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    textAlignVertical: 'top', // Ensure text starts from the top
+    borderRadius: 5, // Optional: for rounded corners
+    overflow: 'hidden', // Ensures the content doesn't overflow the container
+  },
 
 });
 
