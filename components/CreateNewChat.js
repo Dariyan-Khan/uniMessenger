@@ -35,10 +35,14 @@ const SearchScreen = () => {
   const [year, setYear] = useState("");
   const [isYearFocus, setIsYearFocus] = useState(false);
 
+  const [interest1, setInterest1] = useState("");
+  const [interest2, setInterest2] = useState("");
+  const [interest3, setInterest3] = useState("");
+  const [interest4, setInterest4] = useState("");
+
   const uni_json = require('../university_subjects.json')[uni.trim()]
   const uni_subjects = Object.keys(uni_json);
   let uni_subject_picker_list = []
-  // let year_picker_list = []
 
   const all_years = [
     {"label": "1st Year", "value": 1},
@@ -52,8 +56,10 @@ const SearchScreen = () => {
     }
 
   useEffect(() => {
+    console.log("interest1:", interest1);
     const timerId = setTimeout(() => {
-      if (searchQuery || subject || year) {
+      if (searchQuery || subject || year || 
+          interest1 || interest2 || interest3 || interest4) {
         console.log("Searching for:", searchQuery)
         performSearch();
       } else {
@@ -62,21 +68,13 @@ const SearchScreen = () => {
     }, 500); // 500ms delay
 
     return () => clearTimeout(timerId);
-  }, [searchQuery, subject, year]); // Add other dependencies as needed
+  }, [searchQuery, subject, year, interest1, interest2, interest3, interest4]); // Add other dependencies as needed
 
   // Function to get users by username search query
   async function performSearch() {
-    console.log(year, "year")
+    console.log("performing search");
     let q = collection(FIRESTORE_DB, 'users');
 
-    // const usersColRef = collection(FIRESTORE_DB, 'users');
-
-    // const q = query(usersColRef, 
-    //           // where('userName', '>=', searchQuery),
-    //           //  where('userName', '<=', searchQuery + '\uf8ff'),
-    //            where('subject', '==', subject),
-    //           //  where('year', '==', yearOfStudy)
-    //            );
 
     if (searchQuery.trim() !== '') {
     q = query(q, where('userName', '>=', searchQuery), where('userName', '<=', searchQuery + '\uf8ff'));
@@ -93,9 +91,20 @@ const SearchScreen = () => {
     }
   
   if (typeof year === 'number' && year !== '') {
-    console.log("hereeeee")
       q = query(q, where('year', '==', year));
       }
+
+  
+  const interests = [interest1, interest2, interest3, interest4];
+
+  const nonEmptyInterests = interests.filter(interest => interest !== "");
+
+  if (nonEmptyInterests.length > 0) {
+    q = query(q, where('interests', 'array-contains-any', nonEmptyInterests));
+  }
+  
+
+
 
     const querySnapshot = await getDocs(q);
 
@@ -111,8 +120,6 @@ const SearchScreen = () => {
 
 
   const toggleItemSelection = (item) => {
-    console.log(selectedItems.length, "selectedItems length")
-    console.log(item, "item")
     const index = selectedItems.findIndex(selectedItem => selectedItem._id === item._id);
     console.log(index, "index")
   
@@ -148,6 +155,26 @@ const SearchScreen = () => {
         </TouchableOpacity>
     );
   };
+
+  const InputGrid = () => {
+    return (
+      <View style={styles.grid_container}>
+        <View style={styles.grid_row}>
+          <TextInput style={styles.grid_input}
+           placeholder="Interest 1" value={interest1} onChangeText={setInterest1}/>
+          <TextInput style={styles.grid_input} 
+          placeholder="Interest 2" value={interest2} onChangeText={setInterest2}/>
+        </View>
+        <View style={styles.grid_row}>
+          <TextInput style={styles.grid_input} 
+          placeholder="Interest 3" value={interest3} onChangeText={setInterest3}/>
+          <TextInput style={styles.grid_input} 
+          placeholder="Interest 4" value={interest4}onChangeText={setInterest4}/>
+        </View>
+      </View>
+    );
+  };
+  
 
 
   return (
@@ -241,9 +268,18 @@ const SearchScreen = () => {
                         setIsYearFocus(false);
                          }}
                     />
+            
+            <Text> Search by at most four interests</Text>
+
+            <InputGrid/>
+
+
           </View>
         )}
       </View>
+
+
+
 
       <TextInput
             style={styles.message_input}
@@ -316,7 +352,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     marginTop: 10,
-  }
+  },
+  grid_container: {
+    padding: 10, // Adjust padding as needed
+  },
+  grid_row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10, // Space between rows
+  },
+  grid_input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    flex: 1, // Make input boxes expand equally
+    margin: 5, // Space between input boxes
+  },
+
+
 });
 
 export default SearchScreen;
