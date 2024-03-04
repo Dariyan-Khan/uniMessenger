@@ -1,5 +1,5 @@
-// Need to add   "type": "module", to package.json in order to use import statements
-// and hance for this code to work
+// Need to add "type": "module", to package.json in order to use import statements
+// and hence for this code to work
 // But remove it then afterwards in order to run the app
 
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -55,7 +55,7 @@ const createDummyData = async () => {
     const name = faker.internet.userName();
     const email = `${name}@imperial.ac.uk`;
     const password = "Password";
-    const selectedUni = "Imperial College London";
+    const selectedUni = "Imperial College London ";
 
     try{
         await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password).then((userCredential) => {
@@ -70,7 +70,7 @@ const createDummyData = async () => {
                 firstLogin: true
             };
 
-            setDoc(doc(FIRESTORE_DB, "users", userCredential?.user.uid), user_data).then(
+            setDoc(doc(FIRESTORE_DB, "universities", selectedUni, "users", userCredential?.user.uid), user_data).then(
                 () => {
                     console.log('user data created')
                 }
@@ -94,3 +94,7 @@ const createUsers = async (numUsers) => {
         await createDummyData();
     };
 }
+
+createUsers(10).then(() => {
+    console.log('done')
+})
