@@ -156,6 +156,9 @@ const SearchScreen = () => {
     );
   };
 
+
+  
+
   const InputGrid = () => {
     return (
       <View style={styles.grid_container}>
@@ -179,12 +182,6 @@ const SearchScreen = () => {
 
   return (
     <View contentContainerStyle={styles.container}>
-      {/* <TextInput
-        placeholder="Type in a title..."
-        value={title}
-        onChangeText={setTitle}
-        style={styles.input}
-      /> */}
 
       <TextInput
         placeholder="Search people..."
