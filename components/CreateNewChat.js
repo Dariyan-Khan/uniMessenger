@@ -216,7 +216,7 @@ const SearchScreen = () => {
 
 
       <View style={styles.advancedSearchContainer}>
-        <Text onPress={() => setShowAdvanced(!showAdvanced)} style={styles.advancedFilterText}>Advanced Filter</Text>
+        <Text onPress={() => setShowAdvanced(!showAdvanced)} style={styles.advancedFilterText}>{showAdvanced ?'Hide Advanced Filter' : 'Show Advanced Filter'}</Text>
         {showAdvanced && (
           <View>
              <Dropdown
@@ -260,8 +260,6 @@ const SearchScreen = () => {
                     onBlur={() => setIsYearFocus(false)}
                     onChange={item => {
                         setYear(item.value);
-                        // handleState(item.value);
-                        // setCountryName(item.label);
                         setIsYearFocus(false);
                          }}
                     />
@@ -274,8 +272,6 @@ const SearchScreen = () => {
           </View>
         )}
       </View>
-
-
 
 
       <TextInput
